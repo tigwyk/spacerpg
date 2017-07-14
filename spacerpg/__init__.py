@@ -1,1 +1,0 @@
-from .spacerpg import app

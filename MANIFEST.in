@@ -1,0 +1,3 @@
+graft spacerpg/templates
+graft spacerpg/static
+include spacerpg/schema.sql

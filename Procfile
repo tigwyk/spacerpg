@@ -1,1 +1,1 @@
-web gunicorn app:spacerpg
+web gunicorn app:app

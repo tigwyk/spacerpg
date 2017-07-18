@@ -46,10 +46,9 @@ def register():
                 flash('Email address already exists')
                 return redirect(url_for('register'))
             else:
-                user = User(
-                        email = form.email.data,
-                        password = form.password.data
-                        )
+                user = User()
+                user.email = form.email.data
+                user.password = form.password.data
                 db.session.add(user)
                 db.session.commit()
                 flash('Registered succesfully!')

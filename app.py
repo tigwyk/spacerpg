@@ -46,12 +46,13 @@ def register():
                 flash('Email address already exists')
                 return redirect(url_for('register'))
             else:
-                user = User()
-                user.email = form.email.data
-                user.password = form.password.data
+                user = User(
+                        email = form.email.data,
+                        password = form.password.data
+                        )
                 db.session.add(user)
                 db.session.commit()
-                flash('Registered succesfully!')
+                flash('Registered succesfully! password hash: {}').format(user.password)
                 flask_login.login_user(user)
                 return redirect(url_for('show_entries'))
         else:

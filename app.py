@@ -52,7 +52,7 @@ def register():
                         )
                 db.session.add(user)
                 db.session.commit()
-                flash('Registered succesfully! password hash: {}').format(user.password)
+                flash('Registered succesfully! password hash: {}'.format(user.password))
                 flask_login.login_user(user)
                 return redirect(url_for('show_entries'))
         else:

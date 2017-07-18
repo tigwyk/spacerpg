@@ -23,7 +23,7 @@ class Result(db.Model):
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     email = db.Column(db.String(64), unique=True)
-    _password = db.Column(db.String(128))
+    _password = db.Column(db.Binary(60))
 
     @property
     def is_active(self):
@@ -39,17 +39,6 @@ class User(db.Model):
 
     def get_id(self):
         return self.id
-    
-    def __eq__(self, other):
-        if isinstance(other, UserMixin):
-            return self.get_id() == other.get_id()
-        return NotImplemented
-
-    def __ne__(self, other):
-        equal = self.__eq__(other)
-        if equal is NotImplemented:
-            return NotImplemented
-        return not equal
 
     @hybrid_property
     def password(self):

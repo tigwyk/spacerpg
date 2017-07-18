@@ -1,5 +1,9 @@
-from app import db
 from sqlalchemy.dialects.postgresql import JSON
+from flask_login import UserMixin
+from app import app
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy(app)
 
 class Result(db.Model):
     __tablename__ = 'results'
@@ -16,3 +20,7 @@ class Result(db.Model):
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
+
+class User(UserMixin):
+    pass
+

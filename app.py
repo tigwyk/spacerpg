@@ -52,7 +52,7 @@ def register():
                         )
                 db.session.add(user)
                 db.session.commit()
-                flash('Registered succesfully!)
+                flash('Registered succesfully!')
                 flask_login.login_user(user)
                 return redirect(url_for('show_entries'))
         else:

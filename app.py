@@ -71,7 +71,7 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 flask_login.login_user(user,remember=True)
                 flash('You were logged in')
-                next = flask.request.args.get('next')
+                next = request.args.get('next')
                 if not is_safe_url(next):
                     return abort(400)
                 return redirect(next or url_for('show_entries'))

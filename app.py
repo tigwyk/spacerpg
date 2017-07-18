@@ -65,10 +65,11 @@ def login():
     if request.method == 'POST':
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
+            hashed_candidate = bcrypt.generate_password_hash(form.password.data)
             if user is None:
                 flash('Email address not found')
                 return redirect(url_for('login'))
-            if bcrypt.generate_password_hash(form.password.data) == user.password:
+            if bcrypt.check_password_hash(user.password, hashed_candidate):
                 flask_login.login_user(user,remember=True)
                 flash('You were logged in')
                 next = flask.request.args.get('next')

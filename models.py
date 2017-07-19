@@ -53,4 +53,35 @@ class User(db.Model):
         self.password = password
 
     def __repr__(self):
-        return '<User {} {}>'.format(self.id,self.email)
+        return '<User <{}> {}>'.format(self.id,self.email)
+
+class Character(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(64))
+    
+    attributes = db.Column(JSON)
+    inventory = db.Column(JSON)
+
+    def __init__(self, name):
+        self.name = name
+        self.attributes = {'Strength':0, 'Dexterity':0, 'Intelligence':0}
+        self.inventory = []
+
+    def __repr__(self):
+        return 'Character <{}#{}>'.format(self.name, self.id)
+
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(128))
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return 'Item <{}#{}>'.format(self.name, self.id)
+
+class Weapon(Item):
+    pass
+
+class Armor(Item):
+    pass

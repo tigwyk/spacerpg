@@ -107,3 +107,5 @@ def character_profile():
                 db.session.commit()
                 flash('Character created! Welcome to Phobos!')
                 return redirect(url_for('character_profile'))
+        else:
+            return redirect(url_for('character_profile'))

@@ -20,6 +20,9 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     email = db.Column(db.String(64), unique=True)
     _password = db.Column(db.Binary(60))
+    character = db.relationship('Character',backref='user',uselist=False)
+
+    @property
 
     @property
     def is_active(self):
@@ -54,14 +57,16 @@ class User(db.Model):
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64))
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     attributes = db.Column(JSON)
     inventory = db.relationship('Item', backref='container', lazy='dynamic')
+    credits = db.Column(db.Integer)
 
     def __init__(self, name):
         self.name = name
         self.attributes = {'Strength':0, 'Dexterity':0, 'Intelligence':0}
         self.inventory = []
+        self.credits = 0
 
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)

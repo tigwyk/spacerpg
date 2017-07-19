@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if not current_user.character %}
+<form action="{{ url_for('character_profile') }}" method=post class=add-entry>
+	<dl>
+		<dt>{{form.name.label}}
+		<dd>{{form.name}}
+		<dd><input type=submit value='Create Character'>
+	</dl>
+</form>
+{% endif %}
+{{ current_user.character.name }}
+{{ current_user.character.credits }}
+{% endblock%}

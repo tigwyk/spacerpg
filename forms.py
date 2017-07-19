@@ -14,3 +14,8 @@ class LoginForm(FlaskForm):
     email = StringField('Email Address', [validators.Length(min=6)])
     password = PasswordField('Password')
 
+class CharacterCreationForm(FlaskForm):
+    name = StringField('Character Name', [validators.Length(min=3, max=35)])
+
+class ItemCreationForm(FlaskForm):
+    name = StringField('Item Name', [validators.Length(min=1)])

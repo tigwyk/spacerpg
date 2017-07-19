@@ -85,3 +85,8 @@ def logout():
     flask_login.logout_user()
     flash('You were logged out')
     return redirect(url_for('show_entries'))
+
+@app.route('/character')
+@flask_login.login_required
+def character_profile():
+    name = 

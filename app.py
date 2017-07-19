@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-from models import Result,User
+from models import News,User
 from login import login_manager
 from forms import RegistrationForm,LoginForm
 

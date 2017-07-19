@@ -11,9 +11,12 @@
 	</dl>
 </form>
 {% endif %}
+{% if current_user.character is not defined %}
+<a href={{url_for('character')}}>New Character</a>
+{% endif %}
 <ul class=entries>
-	{% for entry in entries %}
-	<li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
+	{% for news_item in news %}
+	<li><h2>{{ news_item.title }}</h2>{{ news_item.text|safe }}
 		{% else %}
 		<li><em>Unbelievable. No entries here so far.</em>
 			{% endfor %}

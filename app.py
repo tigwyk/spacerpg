@@ -25,15 +25,15 @@ def is_safe_url(target):
     return test_url.scheme in ('http','https') and ref_url.netloc == test_url.netloc
 
 @app.route('/')
-def show_entries():
-    entries = ""
-    return render_template('show_entries.html', entries=entries)
+def index():
+    news = News.query.all()
+    return render_template('index.html', news=news)
 
 @app.route('/add', methods=['POST'])
 @flask_login.login_required
 def add_entry():
     flash('New entry was successfully posted')
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('index'))
 
 @app.route('/register', methods=['POST','GET'])
 def register():
@@ -54,7 +54,7 @@ def register():
                 db.session.commit()
                 flash('Registered succesfully!')
                 flask_login.login_user(user)
-                return redirect(url_for('show_entries'))
+                return redirect(url_for('index'))
         else:
             flash('Form failed to validate')
             return redirect(url_for('register'))
@@ -74,7 +74,7 @@ def login():
                 next = request.args.get('next')
                 if not is_safe_url(next):
                     return abort(400)
-                return redirect(next or url_for('show_entries'))
+                return redirect(next or url_for('index'))
             else:
                 flash('Incorrect password')
                 return redirect(url_for('login'))
@@ -84,7 +84,7 @@ def login():
 def logout():
     flask_login.logout_user()
     flash('You were logged out')
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('index'))
 
 @app.route('/character', methods=['GET', 'POST'])
 @flask_login.login_required

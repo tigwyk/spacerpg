@@ -95,7 +95,7 @@ def character_profile():
         if char is None:
             return render_template('character_profile.html',form=form)    
         else:
-            return render_template('character_profile.html')
+            return render_template('character_profile.html',character=char)
     elif request.method == 'POST':
         if form.validate_on_submit():
             if Character.query.filter_by(name=form.name.data).first():

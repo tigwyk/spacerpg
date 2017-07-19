@@ -10,7 +10,7 @@
 		<dd><input type=submit value=Share>
 	</dl>
 </form>
-{% if not current_user.character is defined %}
+{% if current_user.character is not none %}
 <a href={{url_for('character_profile')}}>New Character</a>
 {% endif %}
 

@@ -86,7 +86,24 @@ def logout():
     flash('You were logged out')
     return redirect(url_for('show_entries'))
 
-@app.route('/character')
+@app.route('/character', methods=['GET', 'POST'])
 @flask_login.login_required
 def character_profile():
-    name = 
+    form = CharacterCreationForm()
+    if request.method == 'GET':
+        char = current_user.character
+        if char is None:
+            return render_template('character_profile.html',form=form)    
+        else:
+            return render_template('character_profile.html')
+    elif request.method == 'POST':
+        if form.validate_on_submit():
+            if Character.query.filter_by(name=form.name.data).first():
+                flash('Character name already in use. Try again.')
+                return redirect(url_for('character_profile'))
+            else:
+                character = Character(form.name.data)
+                db.session.add(character)
+                db.session.commit()
+                flash('Character created! Welcome to Phobos!')
+                return redirect(url_for('character_profile'))

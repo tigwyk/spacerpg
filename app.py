@@ -108,4 +108,5 @@ def character_profile():
                 flash('Character created! Welcome to Phobos!')
                 return redirect(url_for('character_profile'))
         else:
+            flash('Failed to validate form')
             return redirect(url_for('character_profile'))

@@ -23,8 +23,6 @@ class User(db.Model):
     character = db.relationship('Character',backref='user',uselist=False)
 
     @property
-
-    @property
     def is_active(self):
         return True
 

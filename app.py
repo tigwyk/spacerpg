@@ -104,8 +104,9 @@ def character_profile():
             else:
                 character = Character(form.name.data)
                 db.session.add(character)
-                db.session.commit()
                 flask_login.current_user.character = character
+                db.session.add(flask_login.current_user)
+                db.session.commit()
                 flash('Character created! Welcome to Phobos!')
                 return redirect(url_for('character_profile'))
         else:

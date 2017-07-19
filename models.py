@@ -56,7 +56,7 @@ class Character(db.Model):
     name = db.Column(db.String(64))
     
     attributes = db.Column(JSON)
-    inventory = db.Column(JSON)
+    inventory = db.relationship('Item', backref='container', lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
@@ -69,6 +69,7 @@ class Character(db.Model):
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
+    container_id = db.Column(db.Integer, db.ForeignKey('character.id'))
 
     def __init__(self, name):
         self.name = name

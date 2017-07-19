@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash,current_user
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 import flask_login
 from urllib.parse import urlparse, urljoin
 from flask_sqlalchemy import SQLAlchemy
@@ -91,7 +91,7 @@ def logout():
 def character_profile():
     form = CharacterCreationForm()
     if request.method == 'GET':
-        char = current_user.character
+        char = flask_login.current_user.character
         if char is None:
             return render_template('character_profile.html',form=form)    
         else:

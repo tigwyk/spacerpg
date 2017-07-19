@@ -10,9 +10,10 @@
 		<dd><input type=submit value=Share>
 	</dl>
 </form>
-{% endif %}
 {% if current_user.character is not defined %}
 <a href={{url_for('character_profile')}}>New Character</a>
+{% endif %}
+
 {% endif %}
 <ul class=entries>
 	{% for news_item in news %}

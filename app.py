@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 
 from models import News,User
 from login import login_manager
-from forms import RegistrationForm,LoginForm
+from forms import RegistrationForm,LoginForm,CharacterCreationForm
 
 
 def is_safe_url(target):

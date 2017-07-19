@@ -12,7 +12,7 @@
 </form>
 {% endif %}
 {% if current_user.character is not defined %}
-<a href={{url_for('character')}}>New Character</a>
+<a href={{url_for('character_profile')}}>New Character</a>
 {% endif %}
 <ul class=entries>
 	{% for news_item in news %}

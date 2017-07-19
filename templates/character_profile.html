@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-{% if not current_user.character %}
+{% if form is defined %}
 <form action="{{ url_for('character_profile') }}" method=post class=add-entry>
 	<dl>
 		<dt>{{form.name.label}}
@@ -9,6 +9,8 @@
 	</dl>
 </form>
 {% endif %}
+{% if character is defined %}
 {{ character.name }}
 {{ character.credits }}
+{% endif %}
 {% endblock%}

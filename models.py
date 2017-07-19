@@ -4,21 +4,17 @@ from flask_login import UserMixin
 from app import app,db,bcrypt
 
 
-class Result(db.Model):
-    __tablename__ = 'results'
+class News(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(128))
+    text = db.Column(db.String())
 
-    id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String())
-    result_all = db.Column(JSON)
-    result_no_stop_words = db.Column(JSON)
-
-    def __init__(self, url, result_all, result_no_stop_words):
-        self.url = url
-        self.result_all = result_all
-        self.result_no_stop_words = result_no_stop_words
+    def __init__(self, title, text):
+        self.title = title
+        self.text = text
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return '<News #{}>'.format(self.id)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True,autoincrement=True)
@@ -53,7 +49,7 @@ class User(db.Model):
         self.password = password
 
     def __repr__(self):
-        return '<User <{}> {}>'.format(self.id,self.email)
+        return '<User #{} {}>'.format(self.id,self.email)
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -68,7 +64,7 @@ class Character(db.Model):
         self.inventory = []
 
     def __repr__(self):
-        return 'Character <{}#{}>'.format(self.name, self.id)
+        return '<Character {}#{}>'.format(self.name, self.id)
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -78,10 +74,12 @@ class Item(db.Model):
         self.name = name
 
     def __repr__(self):
-        return 'Item <{}#{}>'.format(self.name, self.id)
+        return '<Item {}#{}>'.format(self.name, self.id)
 
 class Weapon(Item):
-    pass
+    def __repr__(self):
+        return '<Weapon {}#{}>'.format(self.name, self.id)
 
 class Armor(Item):
-    pass
+    def __repr__(self):
+        return '<Armor {}#{}>'.format(self.name, self.id)

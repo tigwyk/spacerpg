@@ -10,9 +10,9 @@
 	<h1>Space RPG</h1>
 	<div class=metanav>
 		{% if not current_user.is_authenticated %}
-		<a href="{{ url_for('login') }}"><Button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">log in</Button></a>
+		<a href="{{ url_for('login') }}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">log in</a>
 		{% else %}
-		<a href="{{ url_for('logout') }}"><Button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">log out</Button></a>
+		<a href="{{ url_for('logout') }}" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">log out</a>
 		{% endif %}
 	</div>
 	{% for message in get_flashed_messages() %}

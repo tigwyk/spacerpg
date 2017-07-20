@@ -6,33 +6,22 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.light_blue-blue.min.css" />
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-	<header class="mdl-layout__header">
-		<div class="mdl-layout-icon"></div>
-		<div class="mdl-layout__header-row">
-			<span class="mdl-layout__title">Space RPG</span>
-			<div class="mdl-layout-spacer"></div>
-			<nav class="mdl-navigation">
-				{% if not current_user.is_authenticated %}
+<div class="content-grid mdl-grid">
+	<div class="mdl-cell">
+			{% if not current_user.is_authenticated %}
 				<a href="{{ url_for('login') }}" class="mdl-navigation__link">log in</a>
 				{% else %}
 				<a href="{{ url_for('logout') }}" class="mdl-navigation__link">log out</a>
 				{% endif %}
-			</nav>
-		</div>
-	</header>
-	<div class="mdl-layout__drawer">
-		<span class="mdl-layout__title">Space RPG</span>
-		<nav class="mdl-navigation">
-			<a class="mdl-navigation__link" href="{{ url_for('character_profile') }}">Character</a>
-		</nav>
 	</div>
-	<main class="mdl-layout__content">
+	<div class="mdl-cell">
+		<a class="mdl-navigation__link" href="{{ url_for('character_profile') }}">Character</a>
+	</div>
 	{% for message in get_flashed_messages() %}
 	<div class=flash>{{ message }}</div>
 	{% endfor %}
 	{% block body %}{% endblock %}
-	</main>
+
 	<footer class="mdl-mini-footer">
 		<div class="mdl-mini-footer__left-section">
 			<div class="mdl-logo">Space RPG</div>

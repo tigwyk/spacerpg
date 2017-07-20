@@ -27,8 +27,10 @@
 			<a class="mdl-navigation__link" href="{{ url_for('character_profile') }}">Character</a>
 		</nav>
 	</div>
+	<main class="mdl-layout__content">
 	{% for message in get_flashed_messages() %}
 	<div class=flash>{{ message }}</div>
 	{% endfor %}
 	{% block body %}{% endblock %}
+	</main>
 </div>

@@ -11,7 +11,21 @@
 	</dl>
 </form>
 {% if current_user.character is none %}
-<a href={{url_for('character_profile')}}>New Character</a>
+<div class="mdl-card">
+	<div class="mdl-card__title">
+		<h2 class="mdl-card__title-text">New Player!</h2>
+	</div>
+	<div class="mdl-card__media">
+		<img src="skytower.jpg" width="173" height="157" border="0" alt=""
+							      style="padding:10px;">
+	</div>
+	<div class="mdl-card__supporting-text">
+		Welcome to Phobos, new player!
+	</div>
+	<div class="mdl-card__actions">
+	<a href={{url_for('character_profile')}}>New Character</a>
+</div>
+</div>
 {% endif %}
 
 {% endif %}

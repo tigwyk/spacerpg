@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 {% if current_user.is_authenticated %}
+{% if current_user.role == 'admin' %}
 <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
 	<dl>
 		<dt>Title:
@@ -10,6 +11,7 @@
 		<dd><input type=submit value=Share>
 	</dl>
 </form>
+{% endif %}
 {% if current_user.character is none %}
 <div class="mdl-card">
 	<div class="mdl-card__title">

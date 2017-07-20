@@ -3,6 +3,7 @@
 <div class="mdl-grid">
 {% if current_user.is_authenticated %}
 {% if current_user.role == 'admin' %}
+<div class="mdl-cell mdl-cell--12-col">
 <form action="{{ url_for('add_news') }}" method=post class=add-entry>
 	<dl>
 		<dt>Title:
@@ -12,8 +13,10 @@
 		<dd><input type=submit value=Share>
 	</dl>
 </form>
+</div>
 {% endif %}
 {% if current_user.character is none %}
+<div class="mdl-cell mdl-cell--12-col">
 <div class="mdl-card mdl-shadow--4dp">
 	<div class="mdl-card__title">
 		<h2 class="mdl-card__title-text">New Player!</h2>
@@ -29,9 +32,11 @@
 		<a href={{url_for('character_profile')}} class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">New Character</a>
 </div>
 </div>
+</div>
 {% endif %}
 
 {% endif %}
+<div class="mdl-cell mdl-cell--12-col">
 <ul class=entries>
 	{% for news_item in news %}
 	<li><h2>{{ news_item.title }}</h2>{{ news_item.text|safe }}
@@ -39,5 +44,6 @@
 		<li><em>Unbelievable. No entries here so far.</em>
 			{% endfor %}
 </ul>
+</div>
 </div>
 {% endblock%}

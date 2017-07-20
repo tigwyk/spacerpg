@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="mdl-grid">
 {% if current_user.is_authenticated %}
 {% if current_user.role == 'admin' %}
-<form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+<form action="{{ url_for('add_news') }}" method=post class=add-entry>
 	<dl>
 		<dt>Title:
 		<dd><input type=text size=30 name=title>
@@ -38,4 +39,5 @@
 		<li><em>Unbelievable. No entries here so far.</em>
 			{% endfor %}
 </ul>
+</div>
 {% endblock%}

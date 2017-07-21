@@ -17,9 +17,11 @@
 	<div class="mdl-cell mdl-cell--2-col">
 		<a class="mdl-navigation__link" href="{{ url_for('character_profile') }}">Character</a>
 	</div>
+	<div class="mdl-cell mdl-cell--12-col">
 	{% for message in get_flashed_messages() %}
 	<div class=flash>{{ message }}</div>
 	{% endfor %}
+	</div>
 	<div class="mdl-cell mdl-cell--12-col">
 	{% block body %}{% endblock %}
 	</div>

@@ -61,15 +61,17 @@ class Character(db.Model):
     attributes = db.Column(JSON)
     inventory = db.relationship('Item', backref='container', lazy='dynamic')
     credits = db.Column(db.Integer)
+    hps = db.Column(db.Integer)
 
     def __init__(self, name):
         str_max = random.uniform(9,11)
         dex_max = random.uniform(8,10)
         int_max = random.uniform(8,10)
         self.name = name
-        self.attributes = {'Strength':str_max, 'Dexterity':dex_max, 'Intelligence':int_max}
+        self.attributes = {'strength':9, 'dexterity':8, 'intelligence':8,'max_str':str_max, 'max_dex':dex_max, 'max_int':int_max}
         self.inventory = []
         self.credits = 0
+        self.hps = self.attributes['strength']*3
 
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)

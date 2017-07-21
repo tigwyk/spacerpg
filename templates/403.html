@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="mdl-grid">
+<div class="mdl-cell mdl-cell--12-col">
+	<h1>Oops, you're not authorized to be here. You can <a href="{{ url_for('login') }}">login</a> or <a href="{{ url_for('index') }}">return home</a>.</h1>
+</div>
+</div>
+{% endblock%}

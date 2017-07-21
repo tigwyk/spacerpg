@@ -11,6 +11,3 @@ login_manager.init_app(app)
 def user_loader(user_id):
     return User.query.get(user_id)
 
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    return 'Unauthorized'

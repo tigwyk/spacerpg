@@ -112,3 +112,9 @@ def character_profile():
         else:
             flash('Failed to validate form')
             return redirect(url_for('character_profile'))
+
+
+
+@login_manager.unauthorized_handler
+def unauthorized_handler():
+        return render_template('403.html')

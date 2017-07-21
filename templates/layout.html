@@ -20,7 +20,10 @@
 	{% for message in get_flashed_messages() %}
 	<div class=flash>{{ message }}</div>
 	{% endfor %}
+	<div class="mdl-cell mdl-cell--12-col">
 	{% block body %}{% endblock %}
+	</div>
+	<div class="mdl-cell mdl-cell--12-col">
 	<footer class="mdl-mini-footer">
 		<div class="mdl-mini-footer__left-section">
 			<div class="mdl-logo">Space RPG</div>
@@ -29,4 +32,6 @@
 				<li><a href="#">Privacy & Terms</a></li>
 			</ul>
 		</div>
-	</footer></div>
+	</footer>
+	</div>
+	</div>

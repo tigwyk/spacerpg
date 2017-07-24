@@ -71,7 +71,8 @@ class Room(db.Model):
     npcs = db.relationship('NPC',backref='location',lazy='dynamic')
     players = db.relationship('Character', backref='location',lazy='dynamic')
     description = db.Column(db.String(256))
-    exits = db.relationship('Room',lazy='joined')
+    exit_id = db.Column(db.Integer, db.ForeignKey('room.id'), index=True)
+    exits = db.relationship('Room')
 
     def __init__(self, name):
         self.name = name

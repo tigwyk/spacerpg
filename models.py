@@ -54,27 +54,6 @@ class User(db.Model):
     def __repr__(self):
         return '<User #{} {}>'.format(self.id,self.email)
 
-class Character(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(64))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    attributes = db.Column(JSON)
-    inventory = db.relationship('Item', secondary=player_inventory_table, backref='owner')
-    credits = db.Column(db.Integer)
-    hps = db.Column(db.Integer)
-
-    def __init__(self, name):
-        str_max = random.uniform(9,11)
-        dex_max = random.uniform(8,10)
-        int_max = random.uniform(8,10)
-        self.name = name
-        self.attributes = {'strength':5, 'dexterity':5, 'intelligence':5,'max_str':str_max, 'max_dex':dex_max, 'max_int':int_max}
-        self.credits = 0
-        self.hps = self.attributes['strength']*3
-
-    def __repr__(self):
-        return '<Character {}#{}>'.format(self.name, self.id)
-
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
@@ -129,6 +108,27 @@ npc_inventory_table = db.Table('npc_inventory_table',
         db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
         db.Column('quantity', db.Integer),
         db.PrimaryKeyConstraint('npc_id','item_id') )
+
+class Character(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(64))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    attributes = db.Column(JSON)
+    inventory = db.relationship('Item', secondary=player_inventory_table, backref='owner')
+    credits = db.Column(db.Integer)
+    hps = db.Column(db.Integer)
+
+    def __init__(self, name):
+        str_max = random.uniform(9,11)
+        dex_max = random.uniform(8,10)
+        int_max = random.uniform(8,10)
+        self.name = name
+        self.attributes = {'strength':5, 'dexterity':5, 'intelligence':5,'max_str':str_max, 'max_dex':dex_max, 'max_int':int_max}
+        self.credits = 0
+        self.hps = self.attributes['strength']*3
+
+    def __repr__(self):
+        return '<Character {}#{}>'.format(self.name, self.id)
 
 
 

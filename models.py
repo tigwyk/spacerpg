@@ -3,6 +3,19 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
 from app import app,db,bcrypt
 
+player_inventory_table = db.Table('player_inventory_table', 
+        db.Column('character_id', db.Integer, db.ForeignKey('character.id'), nullable=False),
+        db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
+        db.Column('quantity', db.Integer),
+        db.PrimaryKeyConstraint('character_id','item_id') )
+
+npc_inventory_table = db.Table('npc_inventory_table',
+        db.Column('npc_id', db.Integer, db.ForeignKey('npc.id'), nullable=False),
+        db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
+        db.Column('quantity', db.Integer),
+        db.PrimaryKeyConstraint('npc_id','item_id') )
+
+
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -59,7 +72,7 @@ class Character(db.Model):
     name = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     attributes = db.Column(JSON)
-    inventory = db.relationship('Item', backref='container', lazy='dynamic')
+    inventory = db.relationship('Item', secondary=player_inventory_table, backref='owner')
     credits = db.Column(db.Integer)
     hps = db.Column(db.Integer)
 
@@ -68,8 +81,7 @@ class Character(db.Model):
         dex_max = random.uniform(8,10)
         int_max = random.uniform(8,10)
         self.name = name
-        self.attributes = {'strength':9, 'dexterity':8, 'intelligence':8,'max_str':str_max, 'max_dex':dex_max, 'max_int':int_max}
-        self.inventory = []
+        self.attributes = {'strength':5, 'dexterity':5, 'intelligence':5,'max_str':str_max, 'max_dex':dex_max, 'max_int':int_max}
         self.credits = 0
         self.hps = self.attributes['strength']*3
 
@@ -79,7 +91,6 @@ class Character(db.Model):
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
-    container_id = db.Column(db.Integer, db.ForeignKey('character.id'))
     type = db.Column(db.String(64))
 
     def __init__(self, name):
@@ -88,3 +99,34 @@ class Item(db.Model):
     def __repr__(self):
         return '<Item {} {} #{}>'.format(self.name, self.type, self.id)
 
+class Room(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(128))
+    npcs = db.relationship('NPC',backref='location',lazy='dynamic')
+    players = db.relationship('Character', backref='location',lazy='dynamic')
+    description = db.Column(db.String(256))
+    exits = db.relationship('Room',lazy='joined')
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return '<Room {}#{}>'.format(self.name, self.id)
+
+class NPC(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(128))
+    location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    inventory = db.relationship('Item', backref='owner', secondary=npc_inventory_table)
+    attributes = db.Column(JSON)
+    credits = db.Column(db.Integer)
+    hps = db.Column(db.Integer)
+
+    def __init__(self, name):
+        self.name = name
+        self.attributes = {'strength':5,'dexterity':5,'intelligence':5,'max_str':5, 'max_dex':5, 'max_int':5}
+        self.credits = 0
+        self.hps = self.attributes['strength']*3
+
+    def __repr__(self):
+        return '<NPC {}#{}>'.format(self.name, self.id)

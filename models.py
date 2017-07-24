@@ -86,6 +86,7 @@ player_inventory_table = db.Table('player_inventory_table',
         db.PrimaryKeyConstraint('character_id','item_id') )
 
 class NPC(db.Model):
+    __tablename__ == 'npc'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))

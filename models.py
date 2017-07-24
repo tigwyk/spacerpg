@@ -85,12 +85,6 @@ player_inventory_table = db.Table('player_inventory_table',
         db.Column('quantity', db.Integer),
         db.PrimaryKeyConstraint('character_id','item_id') )
 
-npc_inventory_table = db.Table('npc_inventory_table',
-        db.Column('npc_id', db.Integer, db.ForeignKey('npc.id'), nullable=False),
-        db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
-        db.Column('quantity', db.Integer),
-        db.PrimaryKeyConstraint('npc_id','item_id') )
-
 class NPC(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
@@ -109,6 +103,11 @@ class NPC(db.Model):
     def __repr__(self):
         return '<NPC {}#{}>'.format(self.name, self.id)
 
+npc_inventory_table = db.Table('npc_inventory_table',
+        db.Column('npc_id', db.Integer, db.ForeignKey('npc.id'), nullable=False),
+        db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
+        db.Column('quantity', db.Integer),
+        db.PrimaryKeyConstraint('npc_id','item_id') )
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

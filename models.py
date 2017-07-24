@@ -117,6 +117,7 @@ class Character(db.Model):
     attributes = db.Column(JSON)
     inventory = db.relationship('Item', secondary=player_inventory_table, backref='owner')
     credits = db.Column(db.Integer)
+    location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     hps = db.Column(db.Integer)
 
     def __init__(self, name):

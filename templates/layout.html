@@ -1,4 +1,5 @@
 <!doctype html>
+<head>
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Space RPG</title>
@@ -6,6 +7,8 @@
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.light_blue-blue.min.css" />
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+<body>
 <div class="content-grid mdl-grid">
 	<div class="mdl-cell mdl-cell--2-col">
 		<a class="mdl-navigation__link" href="{{ url_for('character_profile') }}">Character</a>
@@ -37,3 +40,4 @@
 	</footer>
 	</div>
 	</div>
+</body>

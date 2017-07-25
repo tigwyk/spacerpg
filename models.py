@@ -80,24 +80,18 @@ class Room(db.Model):
     def __repr__(self):
         return '<Room {}#{}>'.format(self.name, self.id)
 
-player_inventory_table = db.Table('player_inventory_table', 
-        db.Column('character_id', db.Integer, db.ForeignKey('character.id'), nullable=False),
+inventory_table = db.Table('inventory_table', 
+        db.Column('character_id', db.Integer, db.ForeignKey('character.id')),
+        db.Column('npc_id', db.Integer, db.ForeignKey('npc.id')), 
         db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
-        db.Column('quantity', db.Integer),
-        db.PrimaryKeyConstraint('character_id','item_id') )
-
-npc_inventory_table = db.Table('npc_inventory_table',
-        db.Column('npc_id', db.Integer, db.ForeignKey('npc.id'), nullable=False),
-        db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
-        db.Column('quantity', db.Integer),
-        db.PrimaryKeyConstraint('npc_id','item_id') )
+        db.PrimaryKeyConstraint('character_id','npc_id', 'item_id') )
 
 class NPC(db.Model):
     __tablename__ = 'npc'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
-    inventory = db.relationship('Item', backref='owner', secondary=npc_inventory_table)
+    inventory = db.relationship('Item', backref='owner', secondary=inventory_table)
     attributes = db.Column(JSON)
     credits = db.Column(db.Integer)
     hps = db.Column(db.Integer)
@@ -116,7 +110,7 @@ class Character(db.Model):
     name = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     attributes = db.Column(JSON)
-    inventory = db.relationship('Item', secondary=player_inventory_table, backref='owner')
+    inventory = db.relationship('Item', secondary=inventory_table, backref='owner')
     credits = db.Column(db.Integer)
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     hps = db.Column(db.Integer)

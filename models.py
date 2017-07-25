@@ -132,7 +132,7 @@ class Character(db.Model):
     credits = db.Column(db.Integer)
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     opponent_id = db.Column(db.Integer, db.ForeignKey('npc.id'))
-    opponent = db.relationship('NPC',backref=backref("opponent", uselist=False))
+    opponent = db.relationship('NPC',backref=db.backref("opponent", uselist=False))
     hps = db.Column(db.Integer)
 
     def __init__(self, name):

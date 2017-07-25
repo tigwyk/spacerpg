@@ -3,6 +3,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
 from app import app,db,bcrypt
 
+import random
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

@@ -114,7 +114,6 @@ class NPC(db.Model):
     def take_damage(self, attacker, damage):
         if damage >= self.hps:
             self.die(attacker)
-            self.hps = 0
         else:
             self.hps = self.hps - damage
 

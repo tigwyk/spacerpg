@@ -27,8 +27,8 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http','https') and ref_url.netloc == test_url.netloc
 
-@flask_login.login_required
 @app.route('/')
+@flask_login.login_required
 def index():
     news = News.query.all()
     return render_template('index.html', news=news,character=flask_login.current_user.character)

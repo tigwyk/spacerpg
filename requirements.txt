@@ -4,6 +4,7 @@ Flask-Login==0.4.0
 Flask-Migrate==1.8.0
 Flask-SQLAlchemy==2.2
 Flask-Script==2.0.5
+Flask-Vue==0.3.5
 Flask-WTF==0.14.2
 Jinja2==2.9.6
 Mako==1.0.7

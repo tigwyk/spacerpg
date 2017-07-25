@@ -4,15 +4,18 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 import flask_login
 from urllib.parse import urlparse, urljoin
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_vue import Vue
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['VUE_USE_MINIFIED'] = True
 
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
+
+Vue(app)
 
 from models import News,User,Character,Item
 from login import login_manager

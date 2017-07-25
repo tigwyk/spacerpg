@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
+<script type=text/javascript>
+$( document ).ready(function() {
+	$('#console ul').append('<li class="mdl-list__item"><span class="mdl-list__item-primary-content">Ready to go!</span></li>');
+});
+</script>
 <div class="mdl-grid">
 <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 	Location: {{character.location.name}}
@@ -13,12 +18,9 @@
 	{% endif %}
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		<form action="#">
-			  <div class="mdl-textfield mdl-js-textfield">
-				      <textarea class="mdl-textfield__input" type="text" rows= "3" id="console" ></textarea>
-				      <label class="mdl-textfield__label" for="console">{{ g.log }}</label>
-					    </div>
-		</form>
+	<ul id="console">
+	</ul>
+
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		{% if character.opponent %}

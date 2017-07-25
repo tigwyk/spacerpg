@@ -2,7 +2,7 @@
 {% block body %}
 <script type=text/javascript>
 $( document ).ready(function() {
-	$('#console ul').append('<li class="mdl-list__item"><span class="mdl-list__item-primary-content">Ready to go!</span></li>');
+	$("p").text("Ready to go!");
 });
 </script>
 <div class="mdl-grid">
@@ -18,8 +18,7 @@ $( document ).ready(function() {
 	{% endif %}
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-	<ul id="console">
-	</ul>
+		<p>Not ready yet.</p>
 
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">

@@ -13,6 +13,14 @@
 	{% endif %}
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+		<form action="#">
+			  <div class="mdl-textfield mdl-js-textfield">
+				      <textarea class="mdl-textfield__input" type="text" rows= "3" id="console" ></textarea>
+				      <label class="mdl-textfield__label" for="console">{{ g.log }}</label>
+					    </div>
+		</form>
+	</div>
+	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		{% if character.opponent %}
 		<a href="#"><button class="mdl-button mdl-js-button mdl-button--raised">
 				Attack

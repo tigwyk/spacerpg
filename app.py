@@ -118,3 +118,6 @@ def character_profile():
 @login_manager.unauthorized_handler
 def unauthorized_handler():
         return render_template('403.html')
+
+#Game Logic Stuff
+

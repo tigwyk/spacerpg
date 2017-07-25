@@ -106,6 +106,11 @@ class NPC(db.Model):
     def __repr__(self):
         return '<NPC {}#{}>'.format(self.name, self.id)
 
+    def dexterity_roll(self):
+        dex = self.attributes['dexterity']
+        roll = random.uniform(0, dex)
+        return roll
+
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64))
@@ -128,5 +133,7 @@ class Character(db.Model):
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)
 
-
-
+    def dexterity_roll(self):
+        dex = self.attributes['dexterity']
+        roll = random.uniform(0, dex)
+        return roll

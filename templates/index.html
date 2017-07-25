@@ -2,7 +2,7 @@
 {% block body %}
 <script type=text/javascript>
 $( document ).ready(function() {
-	$("p").text("Ready to go!");
+	$("#console").text("Ready to go!");
 });
 </script>
 <div class="mdl-grid">
@@ -18,7 +18,7 @@ $( document ).ready(function() {
 	{% endif %}
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		<p>Not ready yet.</p>
+		<p id="console">Not ready yet.</p>
 
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">

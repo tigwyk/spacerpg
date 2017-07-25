@@ -95,6 +95,7 @@ class NPC(db.Model):
     inventory = db.relationship('Item', secondary=inventory_table)
     attributes = db.Column(JSON)
     credits = db.Column(db.Integer)
+    opponent_id = db.Column(db.Integer, db.ForeignKey('character.id'))
     hps = db.Column(db.Integer)
 
     def __init__(self, name):
@@ -131,8 +132,7 @@ class Character(db.Model):
     inventory = db.relationship('Item', secondary=inventory_table)
     credits = db.Column(db.Integer)
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
-    opponent_id = db.Column(db.Integer, db.ForeignKey('npc.id'))
-    opponent = db.relationship('NPC',backref=db.backref("opponent", uselist=False))
+    opponent = db.relationship('NPC',uselist=False,backref='opponent')
     hps = db.Column(db.Integer)
 
     def __init__(self, name):

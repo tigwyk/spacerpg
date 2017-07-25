@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 
 Vue(app)
 
-from models import News,User,Character,Item
+from models import News,User,Character,Item,NPC,Room
 from login import login_manager
 from forms import RegistrationForm,LoginForm,CharacterCreationForm
 
@@ -27,10 +27,11 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http','https') and ref_url.netloc == test_url.netloc
 
+@flask_login.login_required
 @app.route('/')
 def index():
     news = News.query.all()
-    return render_template('index.html', news=news)
+    return render_template('index.html', news=news,character=flask_login.current_user.character)
 
 @app.route('/add', methods=['POST'])
 @flask_login.login_required
@@ -120,7 +121,7 @@ def character_profile():
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-        return render_template('403.html')
+        return redirect(url_for('login'))
 
 #Game Logic Stuff
 

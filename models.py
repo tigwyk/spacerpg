@@ -131,6 +131,8 @@ class Character(db.Model):
     inventory = db.relationship('Item', secondary=inventory_table)
     credits = db.Column(db.Integer)
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    opponent_id = db.Column(db.Integer, db.ForeignKey('npc.id'))
+    opponent = db.relationship('NPC',backref=backref("opponent", uselist=False))
     hps = db.Column(db.Integer)
 
     def __init__(self, name):

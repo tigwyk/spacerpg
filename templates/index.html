@@ -1,20 +1,12 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mdl-grid">
-{% if not current_user.is_authenticated %}
-<div class="mdl-cell mdl-cell--12-col">
-	<a href="{{ url_for('login') }}">
-	<button class="mdl-button mdl-js-button mdl-button--raised">
-		  Login
-	</button></a>
-</div>
-{% else %}
 <div class="mdl-cell mdl-cell--12-col">
 	<div class="mdl-cell mdl-cell--12-col">
 	{% if character.opponent %}
-	<img src="http://via.placeholder.com/350x150?text={{character.opponent.name}}"/>
+	<img src="http://via.placeholder.com/700x150?text={{character.opponent.name}}"/>
 	{% else %}
-	<img src="http://via.placeholder.com/350x150?text={{character.location.name}}"/>
+	<img src="http://via.placeholder.com/700x150?text={{character.location.name}}"/>
 	{% endif %}
 	</div>
 	<div class="mdl-cell mdl-cell--12-col">
@@ -28,6 +20,5 @@
 												 {% endif %}
 	</div>
 </div>
-{% endif %}
 </div>
 {% endblock%}

@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mdl-grid">
-<div class="mdl-cell mdl-cell--12-col">
-	<div class="mdl-cell mdl-cell--12-col">
+<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 	{% if character.opponent %}
 	<img src="http://via.placeholder.com/675x150?text={{character.opponent.name}}"/>
 	{% else %}
 	<img src="http://via.placeholder.com/675x150?text={{character.location.name}}"/>
 	{% endif %}
 	</div>
-	<div class="mdl-cell mdl-cell--12-col">
+	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		{% if character.opponent %}
 		<a href="#"><button class="mdl-button mdl-js-button mdl-button--raised">
 				Attack

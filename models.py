@@ -111,6 +111,19 @@ class NPC(db.Model):
         roll = random.uniform(0, dex)
         return roll
 
+    def take_damage(self, attacker, damage):
+        if damage >= self.hps:
+            self.die(attacker)
+            self.hps = 0
+        else:
+            self.hps = self.hps - damage
+
+    def die(self, killer):
+        print('{} killed {}.'.format(killer.name, self.name))
+        db.session.delete(self)
+        db.session.commit()
+
+
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64))
@@ -137,3 +150,18 @@ class Character(db.Model):
         dex = self.attributes['dexterity']
         roll = random.uniform(0, dex)
         return roll
+
+    def attack(self, npc):
+        if combat_hit_check(self, npc):
+            damage = 1
+            #if armor_absorb fails
+            npc.take_damage(self, damage)
+            return 'You hit {} for {} damage.'.format(npc.name, damage)
+        else:
+            return 'You missed {}.'.format(npc.name)
+
+def combat_hit_check(player, npc):
+    if player.dexterity_roll() > npc.dexterity_roll():
+        return True
+    else:
+        return False

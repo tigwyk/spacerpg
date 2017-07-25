@@ -18,7 +18,7 @@
 	<div class="mdl-cell mdl-cell--1-col">
 		<a class="mdl-navigation__link" href="{{ url_for('character_profile') }}"><i class="fa fa-suitcase" aria-hidden="true"></i>Inv</a>
 				        </div>
-	<div class="mdl-cell mdl-cell--2-col mdl-cell--8-offset">
+	<div class="mdl-cell mdl-cell--2-col mdl-cell--8-offset mdl-cell--2-offset-phone">
 			{% if not current_user.is_authenticated %}
 				<a href="{{ url_for('login') }}" class="mdl-navigation__link">log in</a>
 				{% else %}

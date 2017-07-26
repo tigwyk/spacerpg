@@ -80,12 +80,14 @@ class Item(db.Model):
     type = db.Column(db.String(64))
     description = db.Column(db.String(256))
     subtitle = db.Column(db.String(256))
+    value = db.Column(db.Integer)
 
-    def __init__(self, name='',type='',description='',subtitle=''):
+    def __init__(self, name='',type='',description='',subtitle='',value=0):
         self.name = name
         self.type = type
         self.description = description
         self.subtitle = subtitle
+        self.value = value
 
     def __repr__(self):
         return '<Item {} {} #{}>'.format(self.name, self.type, self.id)

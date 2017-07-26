@@ -2,6 +2,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
 from app import app,db,bcrypt
+from Flask import jsonify
 
 import random
 
@@ -119,9 +120,10 @@ class NPC(db.Model):
             self.hps = self.hps - damage
 
     def die(self, killer):
-        print('{} killed {}.'.format(killer.name, self.name))
+        msg = '{} killed {}.'.format(killer.name, self.name)
         db.session.delete(self)
         db.session.commit()
+        return jsonify(msg)
 
 
 class Character(db.Model):
@@ -157,9 +159,9 @@ class Character(db.Model):
             damage = 1
             #if armor_absorb fails
             npc.take_damage(self, damage)
-            return 'You hit {} for {} damage.'.format(npc.name, damage)
+            return jsonify('You hit {} for {} damage.'.format(npc.name, damage))
         else:
-            return 'You missed {}.'.format(npc.name)
+            return jsonify('You missed {}.'.format(npc.name))
 
 def combat_hit_check(player, npc):
     if player.dexterity_roll() > npc.dexterity_roll():

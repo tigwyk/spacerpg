@@ -15,7 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-admin = Admni(app, name='Deimos 2147')
+admin = Admin(app, name='Deimos 2147')
 
 from models import News,User,Character,Item,NPC,Room
 from login import login_manager

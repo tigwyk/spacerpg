@@ -18,7 +18,7 @@ class CustomModelView(ModelView):
         return redirect(url_for('login', next=request.url))
 
 
-class AdminModelView(CustomeModelView):
+class AdminModelView(CustomModelView):
     column_editable_list = ['name']
 
 class RoomModelView(CustomModelView):

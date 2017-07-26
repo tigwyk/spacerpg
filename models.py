@@ -3,8 +3,17 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
 from app import app,db,bcrypt
 from flask import jsonify,redirect,url_for
-
+from flask_admin.contrib.sqla import ModelView
 import random
+
+class AdminModelView(ModelView):
+
+    def is_accessible(self):
+        return login.current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return redirect(url_for('login', next=request.url))
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

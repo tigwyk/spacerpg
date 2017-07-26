@@ -6,7 +6,6 @@ from urllib.parse import urlparse, urljoin
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -17,16 +16,16 @@ db = SQLAlchemy(app)
 
 admin = Admin(app, name='Deimos 2147')
 
-from models import News,User,Character,Item,NPC,Room
+from models import News,User,Character,Item,NPC,Room,AdminModelView
 from login import login_manager
 from forms import RegistrationForm,LoginForm,CharacterCreationForm
 
 
-admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(Character, db.session))
-admin.add_view(ModelView(Item, db.session))
-admin.add_view(ModelView(Room, db.session))
-admin.add_view(ModelView(NPC, db.session))
+admin.add_view(AdminModelView(User, db.session))
+admin.add_view(AdminModelView(Character, db.session))
+admin.add_view(AdminModelView(Item, db.session))
+admin.add_view(AdminModelView(Room, db.session))
+admin.add_view(AdminModelView(NPC, db.session))
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)

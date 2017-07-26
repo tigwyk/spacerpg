@@ -129,9 +129,9 @@ def inventory():
         inventory
         return render_template('inventory.html',inventory=inv)
 
-@app.route('/move/<destination_id>')
+@app.route('/move/<int:destination_id>')
 @flask_login.login_required
-def move_character():
+def move_character(destination_id):
     char = flask_login.current_user.character
     if char is None:
         return redirect(url_for('character_profile'))
@@ -139,7 +139,10 @@ def move_character():
     destination = Room.query.get_or_404(destination_id)
     if destination != char.location and destination in char.location.exits:
         char.location = destination
-    
+        flash('Successfully moved to {}.'.format(char.location.name),'error')
+    else:
+        flash('Failed to move.','error')
+        
     return redirect(url_for('index'))
 
 @login_manager.unauthorized_handler

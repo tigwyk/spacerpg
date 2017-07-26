@@ -32,7 +32,7 @@ $( document ).ready(function() {
 						{% else %}
 						{% for exit in character.location.exits %}
 						<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-							<a href="{{ url_for('move_character',exit.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"><i class="material-icons">exit_to_app</i> Travel {{exit.name}}</button></a>
+							<a href="{{ url_for('move_character',destination_id=exit.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"><i class="material-icons">exit_to_app</i> Travel {{exit.name}}</button></a>
 						</div>
 						{% endfor %}
 						{% endif %}

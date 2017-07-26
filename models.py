@@ -6,7 +6,7 @@ from flask import jsonify,redirect,url_for
 from flask_admin.contrib.sqla import ModelView
 import random
 
-class UserModelView(ModelView):
+class CustomModelView(ModelView):
     create_modal = True
     edit_modal = True
 
@@ -18,8 +18,11 @@ class UserModelView(ModelView):
         return redirect(url_for('login', next=request.url))
 
 
-class AdminModelView(UserModelView):
+class AdminModelView(CustomeModelView):
     column_editable_list = ['name']
+
+class RoomModelView(CustomModelView):
+    column_editable_list = ['name','description','type']
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

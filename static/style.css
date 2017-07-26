@@ -15,6 +15,10 @@ body {
 	margin: 0px;
 }
 
+ul {
+	color: #DDDDDD;
+}
+
 #console {
 	border-color: #2196F3;
 	background-color: #424242;

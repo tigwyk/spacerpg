@@ -31,7 +31,14 @@ def is_safe_url(target):
 @flask_login.login_required
 def index():
     news = News.query.all()
-    return render_template('index.html', news=news,character=flask_login.current_user.character)
+    character = flask_login.current_user.character
+    if character is None:
+        return redirect(url_for('character_profile'))
+
+    current_loc = character.location
+    nearest_exits = current_loc.exits + current_loc.linked_rooms
+
+    return render_template('index.html', news=news,character=character,nearest_exits=nearest_exits)
 
 @app.route('/add', methods=['POST'])
 @flask_login.login_required

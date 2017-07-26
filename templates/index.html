@@ -6,33 +6,36 @@ $( document ).ready(function() {
 });
 </script>
 <div class="mdl-grid">
-<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-	Location: {{character.location.name}}
-</div>
-<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-	{% if character.opponent %}
-	<img class="img-responsive" src="http://via.placeholder.com/675x150?text={{character.opponent.name}}"/>
-	{% else %}
-	<img class="img-responsive" src="http://via.placeholder.com/675x150?text={{character.location.name}}"/>
-	{% endif %}
+		Location: {{character.location.name}}
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		<p id="console">Not ready yet.</p>
-	</div>
-	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+			{% if character.opponent %}
+			<img class="img-responsive" src="http://via.placeholder.com/675x150?text={{character.opponent.name}}"/>
+			{% else %}
+			<img class="img-responsive" src="http://via.placeholder.com/675x150?text={{character.location.name}}"/>
+			{% endif %}
+		</div>
+		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+			<p id="console">Not ready yet.</p>
+		</div>
 		{% if character.opponent %}
-		<a href="#"><button class="mdl-button mdl-js-button mdl-button--raised">
-				Attack
-			</button></a>
-			 <a href="#"><button class="mdl-button mdl-js-button mdl-button--raised">
-					                                 Run Away
-									                         </button></a>
-												 {% else %}
-												 {% for exit in character.location.exits %}
-												 <a href="#"><button class="mdl-button mdl-js-button mdl-button--raised">Travel {{exit.name}}</button></a>
-												 {% endfor %}
-												 {% endif %}
+		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+			<a href="#"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+					Attack
+				</button></a></div>
+				<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+					<a href="#"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+							Run Away
+						</button></a></div>
+						{% else %}
+						{% for exit in character.location.exits %}
+						<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+							<a href="#"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"><i class="material-icons">exit_to_app</i> Travel {{exit.name}}</button></a>
+						</div>
+						{% endfor %}
+						{% endif %}
 	</div>
 </div>
 </div>

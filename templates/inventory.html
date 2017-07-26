@@ -8,7 +8,7 @@
 	<span class="mdl-list__item-primary-content">
 		{% if item.is_weapon %}
 		<i class="material-icons mdl-list__item-avatar">gavel</i>
-		{% elseif item.is_armor %}
+		{% elif item.is_armor %}
 		<i class="material-icons mdl-list__item-avatar">accessbility</i>
 		{% else %}
 		<i class="material-icons mdl-list__item-avatar">build</i>
@@ -16,7 +16,7 @@
 		<span>{{item.name}}</span>
 		{% if item.is_weapon %}
 		<span class="mdl-list__item-sub-title">{{item.damage}} Damage</span>
-		{% elseif item.is_armor %}
+		{% elif item.is_armor %}
 		<span class="mdl-list__item-sub-title">{{item.ac}} Armor Class</span>
 		{% else %}
 		<span class="mdl-list__item-sub-title">{{item.subtitle}}</span>

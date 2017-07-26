@@ -71,7 +71,7 @@ class Item(db.Model):
     type = db.Column(db.String(64))
     damage = db.Column(db.Integer)
 
-    def __init__(self, name):
+    def __init__(self, name='',type='',damage=0):
         self.name = name
 
     def __repr__(self):

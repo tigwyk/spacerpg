@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 
 admin = Admin(app, name='Deimos 2147')
 
-from models import News,User,Character,Item,NPC,Room,AdminModelView,Weapon,Armor
+from models import News,User,Character,Item,NPC,Room,AdminModelView,UserModelView,Weapon,Armor
 from login import login_manager
 from forms import RegistrationForm,LoginForm,CharacterCreationForm
 

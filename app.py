@@ -4,23 +4,29 @@ from flask import Flask, request, session, g, redirect, url_for, abort, render_t
 import flask_login
 from urllib.parse import urlparse, urljoin
 from flask_sqlalchemy import SQLAlchemy
-from flask_vue import Vue
 from flask_bcrypt import Bcrypt
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['VUE_USE_MINIFIED'] = True
 
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-Vue(app)
+admin = Admni(app, name='Deimos 2147')
 
 from models import News,User,Character,Item,NPC,Room
 from login import login_manager
 from forms import RegistrationForm,LoginForm,CharacterCreationForm
 
+
+admin.add_view(ModelView(User, db.session))
+admin.add_view(ModelView(Character, db.session))
+admin.add_view(ModelView(Item, db.session))
+admin.add_view(ModelView(Room, db.session))
+admin.add_view(ModelView(NPC, db.session))
 
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)

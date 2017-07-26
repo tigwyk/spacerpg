@@ -20,8 +20,12 @@
 </div>
 {% endif %}
 {% if character is defined %}
+<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 	<h2>	{{ character.name }} {{ character.title }}</h2>
+</div>
+<div class="mdl-cell mdl-cell--2-col mdl-cell--10-offset-desktop mdl-cell--2-offset-phone">
 	<h4>{{ character.credits }} credits</h4>
+</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 <table class="mdl-data-table mdl-js-data-table full-width">
 	<thead>

@@ -77,6 +77,7 @@ class Item(db.Model):
         return '<Item {} {} #{}>'.format(self.name, self.type, self.id)
 
 class Weapon(Item):
+    id = db.Column(db.Integer, db.ForeignKey('item.id'),primary_key=True)
     damage = db.Column(db.Integer)
 
     def __init__(self, name='',damage=0):
@@ -86,7 +87,8 @@ class Weapon(Item):
     def __repr__(self):
         return '<Weapon {}#{}>'.format(self.name, self.id)
 
-class Armor(db.Model):
+class Armor(Item):
+    id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True)
     ac = db.Column(db.Integer)
     
     def __init__(self, name='',ac=0):

@@ -122,8 +122,25 @@ def character_profile():
 @app.route('/inventory')
 @flask_login.login_required
 def inventory():
-    inv = flask_login.current_user.inventory
-    return render_template('inventory.html',inventory=inv)
+    char = flask_login.current_user.character
+    if char is None:
+        return redirect(url_for('character_profile'))    
+    else:
+        inventory
+        return render_template('inventory.html',inventory=inv)
+
+@app.route('/move/<destination_id>')
+@flask_login.login_required
+def move_character():
+    char = flask_login.current_user.character
+    if char is None:
+        return redirect(url_for('character_profile'))
+
+    destination = Room.query.get_or_404(destination_id)
+    if destination != char.location and destination in char.location.exits:
+        char.location = destination
+    
+    return redirect(url_for('index'))
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

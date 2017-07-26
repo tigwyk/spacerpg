@@ -2,19 +2,19 @@
 {% block body %}
 <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 {% if inventory is defined %}
-<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable">
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable fullwidth">
 	<thead>
 		<tr>
-			<th class="mdl-data-table__cell--non-numeric">Name</th>
-			<th class="mdl-data-table__cell--non-numeric">Type</th>
+			<th class="mdl-data-table__cell--non-numeric fullwidth">Name</th>
+			<th class="mdl-data-table__cell--non-numeric fullwidth">Type</th>
 			<th>Value</th>
 		</tr>
 	</thead>
 	<tbody>
 {% for item in inventory %}
 <tr>
-	<td class="mdl-data-table__cell--non-numeric">{{item.name}}</td>
-	<td class="mdl-data-table__cell--non-numeric">{{item.type}}</td>
+	<td class="mdl-data-table__cell--non-numeric fullwidth">{{item.name}}</td>
+	<td class="mdl-data-table__cell--non-numeric fullwidth">{{item.type}}</td>
 	<td>{{item.value}}</td>
 </tr>
 {% endfor %}

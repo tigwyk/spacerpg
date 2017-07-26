@@ -144,13 +144,16 @@ def move_character(destination_id):
         return redirect(url_for('character_profile'))
 
     destination = Room.query.get_or_404(destination_id)
-    if destination != char.location and destination in char.location.exits:
-        char.location = destination
-        db.session.add(char)
-        db.session.commit()
-        flash('Successfully moved to {}.'.format(char.location.name),'error')
+    if destination != char.location:
+        if destination in char.location.exits or destination in char.location.linked_rooms:
+            char.location = destination
+            db.session.add(char)
+            db.session.commit()
+            flash('Successfully moved to {}.'.format(char.location.name),'error')
+        else:
+            flash('Failed to move. Destination not close enough.','error')
     else:
-        flash('Failed to move.','error')
+        flash('Failed to move. Destination is current location.','error')
         
     return redirect(url_for('index'))
 

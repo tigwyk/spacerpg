@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="mdl-grid">
 <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 	<a href="{{url_for('index')}}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 			                          Back
 						                  </button>
 								          </a>
-
+</div>
 {% if form is defined %}
+<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 <form action="{{ url_for('character_profile') }}" method=post class=add-entry>
 	{{ form.csrf_token }}
 	<dl>
@@ -15,10 +17,12 @@
 		<dd><input type=submit value='Create Character'>
 	</dl>
 </form>
+</div>
 {% endif %}
 {% if character is defined %}
 	<h2>	{{ character.name }} {{ character.title }}</h2>
 	<h4>{{ character.credits }} credits</h4>
+	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 <table class="mdl-data-table mdl-js-data-table full-width">
 	<thead>
 		<tr>
@@ -41,6 +45,7 @@
 		</tr>
 	</tbody>
 </table>
+	</div>
 {% endif %}
 </div>
 {% endblock%}

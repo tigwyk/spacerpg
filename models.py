@@ -112,15 +112,22 @@ class Armor(Item):
     def __repr__(self):
         return '<Armor {}#{}>'.format(self.name, self.id)
 
-
+room_exits_table = db.Table('room_exits_table',
+        db.Column('room1_id',db.Integer,db.ForeignKey('room.id'),primary_key=True),
+        db.Column('room2_id',db.Integer,db.ForeignKey('room.id'),primary_key=True)
+        )
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
     players = db.relationship('Character', backref='location',lazy='dynamic')
     description = db.Column(db.String(256))
-    exit_id = db.Column(db.Integer, db.ForeignKey('room.id'), index=True)
-    exits = db.relation('Room', remote_side=[id],backref='linked_rooms',uselist=True)
+    exit_id = db.Column(db.Integer, db.ForeignKey('room.id'))
+    exits = db.relationship('Room', secondary=room_exits_table,
+            primaryjoin=id==room_exits_table.c.room1_id,
+            secondaryjoin=id==room_exits_table.c.room2_id,
+            backref='linked_rooms'
+            )
     type = db.Column(db.String(64))
 
     def __init__(self, name='',description='',type='',players=[],exits=[]):

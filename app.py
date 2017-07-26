@@ -119,6 +119,11 @@ def character_profile():
             return redirect(url_for('character_profile'))
 
 
+@app.route('/inventory')
+@flas_login.login_required
+def inventory():
+    inv = flask_login.current_user.inventory
+    return render_template('inventory.html',inventory=inv)
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

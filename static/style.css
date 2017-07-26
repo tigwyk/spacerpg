@@ -27,3 +27,7 @@ body {
 	height: auto;
 	display: block;
 }
+
+.flash-error {
+	color: red
+}

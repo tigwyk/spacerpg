@@ -47,7 +47,7 @@ def register():
     elif request.method == 'POST':
         if form.validate_on_submit():
             if User.query.filter_by(email=form.email.data).first():
-                flash('Email address already exists')
+                flash('Email address already exists','error')
                 return redirect(url_for('register'))
             else:
                 user = User(
@@ -56,11 +56,11 @@ def register():
                         )
                 db.session.add(user)
                 db.session.commit()
-                flash('Registered succesfully!')
+                flash('Registered succesfully!','error')
                 flask_login.login_user(user)
                 return redirect(url_for('index'))
         else:
-            flash('Form failed to validate')
+            flash('Form failed to validate','error')
             return redirect(url_for('register'))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -70,24 +70,24 @@ def login():
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
             if user is None:
-                flash('Email address not found')
+                flash('Email address not found','error')
                 return redirect(url_for('login'))
             if bcrypt.check_password_hash(user.password, form.password.data):
                 flask_login.login_user(user,remember=True)
-                flash('You were logged in')
+                flash('You were logged in','error')
                 next = request.args.get('next')
                 if not is_safe_url(next):
                     return abort(400)
                 return redirect(next or url_for('index'))
             else:
-                flash('Incorrect password')
+                flash('Incorrect password','error')
                 return redirect(url_for('login'))
     return render_template('login.html',form=form)
 
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
-    flash('You were logged out')
+    flash('You were logged out','error')
     return redirect(url_for('index'))
 
 @app.route('/character', methods=['GET', 'POST'])
@@ -103,7 +103,7 @@ def character_profile():
     elif request.method == 'POST':
         if form.validate_on_submit():
             if Character.query.filter_by(name=form.name.data).first():
-                flash('Character name already in use. Try again.')
+                flash('Character name already in use. Try again.','error')
                 return redirect(url_for('character_profile'))
             else:
                 character = Character(form.name.data)
@@ -112,10 +112,10 @@ def character_profile():
                 db.session.add(flask_login.current_user)
                 db.session.commit()
                 character.move_to(Room.query.first())
-                flash('Character created! Welcome to Phobos!')
+                flash('Character created! Welcome to Phobos!','error')
                 return redirect(url_for('character_profile'))
         else:
-            flash('Failed to validate form')
+            flash('Failed to validate form','error')
             return redirect(url_for('character_profile'))
 
 

@@ -6,8 +6,7 @@ from flask import jsonify,redirect,url_for
 from flask_admin.contrib.sqla import ModelView
 import random
 
-class AdminModelView(ModelView):
-    column_editable_list = ['name']
+class UserModelView(ModelView):
     create_modal = True
     edit_modal = True
 
@@ -17,6 +16,10 @@ class AdminModelView(ModelView):
     def inaccessible_callback(self, name, **kwargs):
         # redirect to login page if user doesn't have access
         return redirect(url_for('login', next=request.url))
+
+
+class AdminModelView(UserModelView):
+    column_editable_list = ['name']
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

@@ -21,7 +21,7 @@ from login import login_manager
 from forms import RegistrationForm,LoginForm,CharacterCreationForm
 
 
-admin.add_view(AdminModelView(User, db.session))
+admin.add_view(UserModelView(User, db.session))
 admin.add_view(AdminModelView(Character, db.session))
 admin.add_view(AdminModelView(Item, db.session))
 admin.add_view(AdminModelView(Room, db.session))

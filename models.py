@@ -2,7 +2,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin
 from app import app,db,bcrypt
-from flask import jsonify
+from flask import jsonify,redirect
 
 import random
 

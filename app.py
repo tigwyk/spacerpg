@@ -145,7 +145,8 @@ def move_character(destination_id):
 
     destination = Room.query.get_or_404(destination_id)
     if destination != char.location:
-        if destination in char.location.exits or destination in char.location.linked_rooms:
+        nearest_exits = char.location.exits + char.location.linked_rooms
+        if destination in nearest_exits:
             char.location = destination
             db.session.add(char)
             db.session.commit()

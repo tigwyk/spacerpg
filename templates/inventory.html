@@ -2,7 +2,28 @@
 {% block body %}
 <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 {% if inventory is defined %}
-Defined
+<ul class="mdl-list">
+{% for item in inventory %}
+<li class="mdl-list__item mdl-list__item--two-line">
+	<span class="mdl-list__item-primary-content">
+		{% if item.is_weapon %}
+		<i class="material-icons mdl-list__item-avatar">gavel</i>
+		{% elseif item.is_armor %}
+		<i class="material-icons mdl-list__item-avatar">accessbility</i>
+		{% else %}
+		<i class="material-icons mdl-list__item-avatar">build</i>
+		{% endif %}
+		<span>{{item.name}}</span>
+		{% if item.is_weapon %}
+		<span class="mdl-list__item-sub-title">{{item.damage}} Damage</span>
+		{% elseif item.is_armor %}
+		<span class="mdl-list__item-sub-title">{{item.ac}} Armor Class</span>
+		{% else %}
+		<span class="mdl-list__item-sub-title">{{item.subtitle}}</span>
+		{% endif %}
+	</span>
+</li>
+{% endfor %}
 {% else %}
 Undefined
 {% endif %}

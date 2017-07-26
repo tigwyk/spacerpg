@@ -90,7 +90,7 @@ class Weapon(Item):
 class Armor(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True)
     ac = db.Column(db.Integer)
-    
+
     def __init__(self, name='',ac=0):
         self.name = name
         self.ac = ac
@@ -116,17 +116,22 @@ class Room(db.Model):
     def __repr__(self):
         return '<Room {}#{}>'.format(self.name, self.id)
 
-inventory_table = db.Table('inventory_table', 
-        db.Column('character_id', db.Integer, db.ForeignKey('character.id')),
-        db.Column('npc_id', db.Integer, db.ForeignKey('npc.id')), 
+player_inventory_table = db.Table('player_inventory_table', 
+        db.Column('character_id', db.Integer, db.ForeignKey('character.id'),nullable=False),
         db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
-        db.PrimaryKeyConstraint('character_id','npc_id', 'item_id') )
+        db.PrimaryKeyConstraint('character_id', 'item_id') )
+
+npc_inventory_table = db.Table('npc_inventory_table',
+        db.Column('npc_id', db.Integer, db.ForeignKey('npc.id'),nullable=False),
+        db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
+        db.PrimaryKeyConstraint('npc_id', 'item_id') )
+
 
 class NPC(db.Model):
     __tablename__ = 'npc'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
-    inventory = db.relationship('Item', secondary=inventory_table)
+    inventory = db.relationship('Item', secondary=npc_inventory_table)
     attributes = db.Column(JSON)
     credits = db.Column(db.Integer)
     opponent_id = db.Column(db.Integer, db.ForeignKey('character.id'))
@@ -164,7 +169,7 @@ class Character(db.Model):
     name = db.Column(db.String(64))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     attributes = db.Column(JSON)
-    inventory = db.relationship('Item', secondary=inventory_table)
+    inventory = db.relationship('Item', secondary=player_inventory_table)
     credits = db.Column(db.Integer)
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     opponent = db.relationship('NPC',uselist=False,backref='opponent')

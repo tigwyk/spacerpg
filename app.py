@@ -133,7 +133,7 @@ def inventory():
     if char is None:
         return redirect(url_for('character_profile'))    
     else:
-        inventory
+        inv=char.inventory
         return render_template('inventory.html',inventory=inv)
 
 @app.route('/move/<int:destination_id>')

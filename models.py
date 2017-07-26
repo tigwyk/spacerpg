@@ -69,9 +69,14 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
     type = db.Column(db.String(64))
+    description = db.Column(db.String(256))
+    subtitle = db.Column(db.String(256))
 
-    def __init__(self, name='',type='',damage=0):
+    def __init__(self, name='',type='',description='',subtitle=''):
         self.name = name
+        self.type = type
+        self.description = description
+        self.subtitle = subtitle
 
     def __repr__(self):
         return '<Item {} {} #{}>'.format(self.name, self.type, self.id)
@@ -109,9 +114,10 @@ class Room(db.Model):
     exits = db.relationship('Room', remote_side=[id],backref='linked_rooms',uselist=True)
     type = db.Column(db.String(64))
 
-    def __init__(self, name='',description=''):
+    def __init__(self, name='',description='',type=''):
         self.name = name
         self.description = description
+        self.type = type
 
     def __repr__(self):
         return '<Room {}#{}>'.format(self.name, self.id)
@@ -135,12 +141,14 @@ class NPC(db.Model):
     attributes = db.Column(JSON)
     credits = db.Column(db.Integer)
     opponent_id = db.Column(db.Integer, db.ForeignKey('character.id'))
+    race = db.Column(db.String(64))
     hps = db.Column(db.Integer)
 
-    def __init__(self, name='',credits=0):
+    def __init__(self, name='',credits=0,race='human'):
         self.name = name
         self.attributes = {'strength':5,'dexterity':5,'intelligence':5,'max_str':5, 'max_dex':5, 'max_int':5}
-        self.credits = 0
+        self.credits = credits
+        self.race = race
         self.hps = self.attributes['strength']*3
 
     def __repr__(self):

@@ -139,6 +139,8 @@ def move_character(destination_id):
     destination = Room.query.get_or_404(destination_id)
     if destination != char.location and destination in char.location.exits:
         char.location = destination
+        db.session.add(char)
+        db.session.commit()
         flash('Successfully moved to {}.'.format(char.location.name),'error')
     else:
         flash('Failed to move.','error')

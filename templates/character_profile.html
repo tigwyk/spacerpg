@@ -1,5 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+	<a href="{{url_for('index')}}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+			                          Back
+						                  </button>
+								          </a>
+
 {% if form is defined %}
 <form action="{{ url_for('character_profile') }}" method=post class=add-entry>
 	{{ form.csrf_token }}
@@ -11,7 +17,34 @@
 </form>
 {% endif %}
 {% if character is defined %}
-{{ character.name }}
-{{ character.credits }}
+<div class="mdl-cell mdl-cell--2-col">
+	<p>	{{ character.name }}</p>
+</div>
+<div class="mdl-cell mdl-cell--2-col">
+	<p>{{ character.credits }} credits</p>
+</div>
+<table class="mdl-data-table mdl-js-data-table full-width">
+	<thead>
+		<tr>
+			<th class="mdl-data-table__cell--non-numeric full-width">Attribute</th>
+			<th>Points</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="mdl-data-table__cell--non-numeric full-width">Strength</td>
+			<td>{{character.attributes['strength']}}</td>
+		</tr>
+		<tr>
+			<td class="mdl-data-table__cell--non-numeric full-width">Dexterity</td>
+			<td>{{character.attributes['dexterity']}}</td>
+		</tr>
+		<tr>
+			<td class="mdl-data-table__cell--non-numeric full-width">Intelligence</td>
+			<td>{{character.attributes['intelligence']}}</td>
+		</tr>
+	</tbody>
+</table>
 {% endif %}
+</div>
 {% endblock%}

@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+	<a href="{{url_for('index')}}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+			  Back
+		</button>
+	</a>
 {% if inventory is defined %}
 <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable full-width">
 	<thead>

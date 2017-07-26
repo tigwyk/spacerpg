@@ -1,6 +1,6 @@
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.hybrid import hybrid_property
-from flask_login import UserMixin
+from flask_login import UserMixin,current_user
 from app import app,db,bcrypt
 from flask import jsonify,redirect,url_for
 from flask_admin.contrib.sqla import ModelView
@@ -9,7 +9,7 @@ import random
 class AdminModelView(ModelView):
 
     def is_accessible(self):
-        return login.current_user.is_authenticated
+        return current_user.is_authenticated
 
     def inaccessible_callback(self, name, **kwargs):
         # redirect to login page if user doesn't have access

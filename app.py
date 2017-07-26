@@ -120,7 +120,7 @@ def character_profile():
 
 
 @app.route('/inventory')
-@flas_login.login_required
+@flask_login.login_required
 def inventory():
     inv = flask_login.current_user.inventory
     return render_template('inventory.html',inventory=inv)

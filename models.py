@@ -211,6 +211,7 @@ class Character(db.Model):
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     opponent = db.relationship('NPC',uselist=False,backref='opponent')
     hps = db.Column(db.Integer)
+    title = db.Column(db.String(128))
 
     def __init__(self, name=''):
         str_max = random.uniform(9,11)

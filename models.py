@@ -57,7 +57,7 @@ class User(db.Model):
     def _set_password(self, plaintext):
         self._password = bcrypt.generate_password_hash(plaintext)
 
-    def __init__(self, email, password):
+    def __init__(self, email='', password=''):
         self.email = email
         self.password = password
         self.role = 'user'
@@ -85,8 +85,9 @@ class Room(db.Model):
     exit_id = db.Column(db.Integer, db.ForeignKey('room.id'), index=True)
     exits = db.relationship('Room', remote_side=[id],backref='linked_rooms',uselist=True)
 
-    def __init__(self, name):
+    def __init__(self, name='',description=''):
         self.name = name
+        self.description = description
 
     def __repr__(self):
         return '<Room {}#{}>'.format(self.name, self.id)
@@ -108,7 +109,7 @@ class NPC(db.Model):
     opponent_id = db.Column(db.Integer, db.ForeignKey('character.id'))
     hps = db.Column(db.Integer)
 
-    def __init__(self, name):
+    def __init__(self, name='',credits=0):
         self.name = name
         self.attributes = {'strength':5,'dexterity':5,'intelligence':5,'max_str':5, 'max_dex':5, 'max_int':5}
         self.credits = 0
@@ -146,7 +147,7 @@ class Character(db.Model):
     opponent = db.relationship('NPC',uselist=False,backref='opponent')
     hps = db.Column(db.Integer)
 
-    def __init__(self, name):
+    def __init__(self, name=''):
         str_max = random.uniform(9,11)
         dex_max = random.uniform(8,10)
         int_max = random.uniform(8,10)
@@ -171,10 +172,6 @@ class Character(db.Model):
             return jsonify('You hit {} for {} damage.'.format(npc.name, damage))
         else:
             return jsonify('You missed {}.'.format(npc.name))
-
-    def move_to(self, location):
-        self.location = location
-        return redirect(url_for('index'))
 
 def combat_hit_check(player, npc):
     if player.dexterity_roll() > npc.dexterity_roll():

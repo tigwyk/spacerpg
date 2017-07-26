@@ -69,13 +69,34 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
     type = db.Column(db.String(64))
-    damage = db.Column(db.Integer)
 
     def __init__(self, name='',type='',damage=0):
         self.name = name
 
     def __repr__(self):
         return '<Item {} {} #{}>'.format(self.name, self.type, self.id)
+
+class Weapon(Item):
+    damage = db.Column(db.Integer)
+
+    def __init__(self, name='',damage=0):
+        self.name = name
+        self.damage = damage
+
+    def __repr__(self):
+        return '<Weapon {}#{}>'.format(self.name, self.id)
+
+class Armor(db.Model):
+    ac = db.Column(db.Integer)
+    
+    def __init__(self, name='',ac=0):
+        self.name = name
+        self.ac = ac
+
+    def __repr__(self):
+        return '<Armor {}#{}>'.format(self.name, self.id)
+
+
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

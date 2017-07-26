@@ -28,6 +28,10 @@ $( document ).ready(function() {
 			 <a href="#"><button class="mdl-button mdl-js-button mdl-button--raised">
 					                                 Run Away
 									                         </button></a>
+												 {% else %}
+												 {% for exit in character.location.exits %}
+												 <a href="#"><button class="mdl-button mdl-js-button mdl-button--raised">Travel {{exit.name}}</button></a>
+												 {% endfor %}
 												 {% endif %}
 	</div>
 </div>

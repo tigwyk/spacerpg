@@ -2,7 +2,7 @@
 {% block body %}
 <script type=text/javascript>
 $( document ).ready(function() {
-	$("#console").text("Ready to go!");
+	$("#console").text("{{ character.location.description }}");
 });
 </script>
 <div class="mdl-grid">

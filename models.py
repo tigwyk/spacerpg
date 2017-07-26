@@ -23,7 +23,6 @@ class AdminModelView(CustomModelView):
 
 class RoomModelView(CustomModelView):
     column_editable_list = ['name','description','type']
-    form_excluded_columns = ['linked_rooms']
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

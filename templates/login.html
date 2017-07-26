@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="mdl-grid">
+	<div class="mdl-cell mdl-cell--12-col">
 <h2>Login</h2>
+	</div>
+	<div class="mdl-cell mdl-cell--12-col">
 <form action="{{ url_for('login') }}" method=post>
 	{{ form.csrf_token }}
 	<dl>
@@ -11,5 +15,7 @@
 		<dd><input type=submit value=Login>
 	</dl>
 </form>
+	</div>
+</div>
 {% endblock%}
 

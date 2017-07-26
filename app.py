@@ -119,7 +119,7 @@ def character_profile():
                 db.session.add(flask_login.current_user)
                 db.session.commit()
                 character.move_to(Room.query.first())
-                flash('Character created! Welcome to Phobos!','error')
+                flash('Character created! Welcome to Deimos 2147!','error')
                 return redirect(url_for('character_profile'))
         else:
             flash('Failed to validate form','error')

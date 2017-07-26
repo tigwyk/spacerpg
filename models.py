@@ -114,11 +114,12 @@ class Room(db.Model):
     exits = db.relationship('Room', remote_side=[id],backref='linked_rooms',uselist=True)
     type = db.Column(db.String(64))
 
-    def __init__(self, name='',description='',type='',players=[]):
+    def __init__(self, name='',description='',type='',players=[],exits=[]):
         self.name = name
         self.description = description
         self.type = type
         self.players = players
+        self.exits = exits
 
     def __repr__(self):
         return '<Room {}#{}>'.format(self.name, self.id)

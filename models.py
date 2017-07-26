@@ -94,6 +94,11 @@ class Weapon(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'),primary_key=True)
     damage = db.Column(db.Integer)
 
+
+    @property
+    def is_weapon():
+        return True
+
     def __init__(self, name='',damage=0):
         self.name = name
         self.damage = damage
@@ -105,6 +110,10 @@ class Armor(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True)
     ac = db.Column(db.Integer)
 
+    @property
+    def is_armor():
+        return True
+    
     def __init__(self, name='',ac=0):
         self.name = name
         self.ac = ac

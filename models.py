@@ -163,6 +163,10 @@ class Character(db.Model):
         else:
             return jsonify('You missed {}.'.format(npc.name))
 
+    def move_to(self, location):
+        self.location = location
+        return redirect(url_for('index'))
+
 def combat_hit_check(player, npc):
     if player.dexterity_roll() > npc.dexterity_roll():
         return True

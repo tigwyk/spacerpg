@@ -107,11 +107,11 @@ def character_profile():
                 return redirect(url_for('character_profile'))
             else:
                 character = Character(form.name.data)
-                character.location = Room.query.first()
                 db.session.add(character)
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)
                 db.session.commit()
+                character.move_to(Room.query.first())
                 flash('Character created! Welcome to Phobos!')
                 return redirect(url_for('character_profile'))
         else:

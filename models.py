@@ -69,6 +69,7 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
     type = db.Column(db.String(64))
+    damage = db.Column(db.Integer)
 
     def __init__(self, name):
         self.name = name
@@ -79,11 +80,11 @@ class Item(db.Model):
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
-    npcs = db.relationship('NPC',backref='location',lazy='dynamic')
     players = db.relationship('Character', backref='location',lazy='dynamic')
     description = db.Column(db.String(256))
     exit_id = db.Column(db.Integer, db.ForeignKey('room.id'), index=True)
     exits = db.relationship('Room', remote_side=[id],backref='linked_rooms',uselist=True)
+    type = db.Column(db.String(64))
 
     def __init__(self, name='',description=''):
         self.name = name
@@ -102,7 +103,6 @@ class NPC(db.Model):
     __tablename__ = 'npc'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
-    location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     inventory = db.relationship('Item', secondary=inventory_table)
     attributes = db.Column(JSON)
     credits = db.Column(db.Integer)

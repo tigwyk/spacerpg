@@ -7,7 +7,7 @@ $( document ).ready(function() {
 </script>
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		Location: {{character.location.name}}
+		Location: {{ character.opponent | default(character.location.name) }}
 	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">

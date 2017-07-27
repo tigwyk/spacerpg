@@ -37,7 +37,6 @@ def is_safe_url(target):
 @app.route('/')
 @flask_login.login_required
 def index():
-    news = News.query.all()
     character = flask_login.current_user.character
     if character is None:
         return redirect(url_for('character_profile'))
@@ -45,7 +44,7 @@ def index():
     current_loc = character.location
     nearest_exits = current_loc.exits + current_loc.linked_rooms
 
-    return render_template('index.html', news=news,character=character,nearest_exits=nearest_exits)
+    return render_template('index.html', character=character,nearest_exits=nearest_exits)
 
 @app.route('/add', methods=['POST'])
 @flask_login.login_required
@@ -166,6 +165,21 @@ def move_character(char=None, destination_id=Room.query.first().id):
         flash('Failed to move. Destination is current location.','error')
         
     return redirect(url_for('index'))
+
+@app.route('/attack')
+@flask_login.login_required
+def attack():
+    character = flask_login.current_user.character
+    if character is None:
+        return redirect(url_for('character_profile'))
+
+    opponent = character.opponent
+
+    if opponent is None:
+        return redirect(url_for('index'))
+
+    combat_results = character.attack(character.opponent)
+    return render_templater('index.html',character=character,opponent=opponent,combat_results=combat_results)
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

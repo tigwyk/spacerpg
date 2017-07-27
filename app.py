@@ -162,7 +162,7 @@ def move_character(destination_id,char=None):
     monster_pool = []
 
     #for demo purposes
-    monster = NPC(name="Testy",attributes={'strength':5,'dexterity':5,'intelligence':5})
+    monster = NPC(name="Testy")
     db.session.add(monster)
     db.session.commit()
 

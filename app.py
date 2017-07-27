@@ -145,9 +145,12 @@ def inventory():
 
 @app.route('/move/<int:destination_id>')
 @flask_login.login_required
-def move_character(char=flask_login.current_user.character, destination_id=Room.query.first().id):
+def move_character(char=None, destination_id=Room.query.first().id):
     if char is None: 
+        if flask_login.current_user.character is None:
             return redirect(url_for('character_profile'))
+        else:
+            char = flask_login.current_user.character
 
     destination = Room.query.get_or_404(destination_id)
     if destination != char.location:

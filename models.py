@@ -235,9 +235,9 @@ class Character(db.Model):
             damage = 1
             #if armor_absorb fails
             npc.take_damage(self, damage)
-            return jsonify('You hit {} for {} damage.'.format(npc.name, damage))
+            return damage
         else:
-            return jsonify('You missed {}.'.format(npc.name))
+            return -1
 
 def combat_hit_check(player, npc):
     if player.dexterity_roll() > npc.dexterity_roll():

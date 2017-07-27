@@ -206,7 +206,15 @@ def attack():
     if opponent is None:
         return redirect(url_for('index'))
 
-    combat_results = character.attack(character.opponent)
+    
+    attack_result = character.attack(character.opponent)
+    if attack_result > 0:
+        combat_results = 'You hit {} for {} damage.'.format(opponent.name, attack_result)
+    elif attack_result == 0:
+        combat_results = 'You hit {} for no damage.'.format(opponent.name)
+    else:
+        combat_results = 'You missed your attack on {}.'.format(opponent.name)
+
     return render_template('index.html',character=character,combat_results=combat_results)
 
 @app.route('/run_away')

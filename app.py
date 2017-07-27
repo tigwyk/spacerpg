@@ -207,7 +207,7 @@ def attack():
         return redirect(url_for('index'))
 
     combat_results = character.attack(character.opponent)
-    return render_templater('index.html',character=character,combat_results=combat_results)
+    return render_template('index.html',character=character,combat_results=combat_results)
 
 @app.route('/run_away')
 @flask_login.login_required

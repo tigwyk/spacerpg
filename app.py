@@ -44,7 +44,7 @@ def index():
     current_loc = character.location
     nearest_exits = current_loc.exits + current_loc.linked_rooms
 
-    return render_template('index.html', character=character,nearest_exits=nearest_exits)
+    return render_template('index.html', character=character,nearest_exits=nearest_exits,opponent=None)
 
 @app.route('/add', methods=['POST'])
 @flask_login.login_required

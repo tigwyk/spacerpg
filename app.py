@@ -226,10 +226,10 @@ def attack():
         npc_combat_msg = '{} hit you for {} damage.'.format(opponent.name, npc_attack_result)
         if opponent.hps < 0:
             npc_combat_msg += " "+opponent.die(character)
-        elif npc_attack_result == 0:
-            npc_combat_msg = '{} hit you for no damage.'.format(opponent.name)
-        else:
-            npc_combat_msg = '{} missed their attack.'.format(opponent.name)
+    elif npc_attack_result == 0:
+        npc_combat_msg = '{} hit you for no damage.'.format(opponent.name)
+    else:
+        npc_combat_msg = '{} missed their attack.'.format(opponent.name)
 
     combat_results = player_combat_msg+' '+npc_combat_msg
 

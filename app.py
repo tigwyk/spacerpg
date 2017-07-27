@@ -44,7 +44,7 @@ def index():
     current_loc = character.location
     nearest_exits = current_loc.exits + current_loc.linked_rooms
 
-    return render_template('index.html', character=character,nearest_exits=nearest_exits,opponent=None)
+    return render_template('index.html', character=character,nearest_exits=nearest_exits)
 
 @app.route('/add', methods=['POST'])
 @flask_login.login_required
@@ -154,7 +154,7 @@ def move_character(destination_id,char=None):
 
 
     if char.opponent:
-        return redirect(url_for('index'))
+        return redirect(url_for('attack'))
 
     destination = Room.query.get_or_404(destination_id)
     current_loc = char.location
@@ -207,7 +207,7 @@ def attack():
         return redirect(url_for('index'))
 
     combat_results = character.attack(character.opponent)
-    return render_templater('index.html',character=character,opponent=opponent,combat_results=combat_results)
+    return render_templater('index.html',character=character,combat_results=combat_results)
 
 @app.route('/run_away')
 @flask_login.login_required

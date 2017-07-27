@@ -125,7 +125,7 @@ def character_profile():
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)
                 db.session.commit()
-                character.move_to(Room.query.first())
+                move_character(character,3)
                 flash('Character created! Welcome to Deimos 2147!','error')
                 return redirect(url_for('character_profile'))
         else:
@@ -145,10 +145,12 @@ def inventory():
 
 @app.route('/move/<int:destination_id>')
 @flask_login.login_required
-def move_character(destination_id):
-    char = flask_login.current_user.character
-    if char is None:
-        return redirect(url_for('character_profile'))
+def move_character(char, destination_id):
+    if char is None: 
+        if flask_login.current_user.character is None:   
+            return redirect(url_for('character_profile'))
+        else:
+            char = flask_login.current_user.character
 
     destination = Room.query.get_or_404(destination_id)
     if destination != char.location:

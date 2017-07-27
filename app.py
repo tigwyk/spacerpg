@@ -142,6 +142,7 @@ def inventory():
         inv=char.inventory
         return render_template('inventory.html',inventory=inv)
 
+
 @app.route('/move/<int:destination_id>')
 @flask_login.login_required
 def move_character(destination_id,char=None):
@@ -151,14 +152,33 @@ def move_character(destination_id,char=None):
         else:
             char = flask_login.current_user.character
 
+
+    if char.opponent:
+        return redirect(url_for('index'))
+
     destination = Room.query.get_or_404(destination_id)
-    if destination != char.location:
-        nearest_exits = char.location.exits + char.location.linked_rooms
+    current_loc = char.location
+
+    monster_pool = []
+
+    #for demo purposes
+    monster = NPC(name="Testy",attributes={'strength':5,'dexterity':5,'intelligence':5})
+
+    monster_pool.append(monster)
+
+    if destination != current_loc:
+        nearest_exits = current_loc.exits + current_loc.linked_rooms
         if destination in nearest_exits:
-            char.location = destination
-            db.session.add(char)
-            db.session.commit()
-            flash('Successfully moved to {}.'.format(char.location.name),'error')
+            if char.dexterity_check(monster_pool[0]) is False:
+                char.opponent = monster_pool[0]            
+                db.session.add(char)
+                db.session.commit()
+                flash('You have encountered {}! Prepare for combat!'.format(char.opponent.name))
+            else:
+                char.location = destination
+                db.session.add(char)
+                db.session.commit()
+                flash('Successfully moved to {}.'.format(char.location.name),'error')
         else:
             flash('Failed to move. Destination not close enough.','error')
     else:

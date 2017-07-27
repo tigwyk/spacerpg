@@ -197,7 +197,7 @@ class NPC(db.Model):
 
     def attack(self, character):
         if combat_hit_check(self, character):
-            damage = random.randint(0,int(self.attributes['strength'])) 
+            damage = random.randint(0,2) 
             #if armor_absorb fails
             character.take_damage(damage)
             return damage

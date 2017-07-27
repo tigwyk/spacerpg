@@ -211,6 +211,8 @@ def attack():
 
     if attack_result > 0:
         combat_results = 'You hit {} for {} damage.'.format(opponent.name, attack_result)
+        if opponent.hps < 0:
+            combat_results += opponent.die(character)
     elif attack_result == 0:
         combat_results = 'You hit {} for no damage.'.format(opponent.name)
     else:

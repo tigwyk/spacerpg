@@ -191,12 +191,9 @@ class NPC(db.Model):
         return roll
 
     def take_damage(self, attacker, damage):
-        if damage >= self.hps:
-            self.die(attacker)
-        else:
-            self.hps = self.hps - damage
-            db.session.add(self)
-            db.session.commit()
+        self.hps = self.hps - damage
+        db.session.add(self)
+        db.session.commit()
 
     def die(self, killer):
         msg = '{} killed {}.'.format(killer.name, self.name)

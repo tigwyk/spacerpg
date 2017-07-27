@@ -40,7 +40,8 @@ def index():
     character = flask_login.current_user.character
     if character is None:
         return redirect(url_for('character_profile'))
-
+    if character.opponent:
+        return redirect(url_for('attack'))
     current_loc = character.location
     nearest_exits = current_loc.exits + current_loc.linked_rooms
 

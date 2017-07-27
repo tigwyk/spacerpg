@@ -145,7 +145,7 @@ def inventory():
 
 @app.route('/move/<int:destination_id>')
 @flask_login.login_required
-def move_character(char=flask_login.current_user.character, destination_id):
+def move_character(char=flask_login.current_user.character, destination_id=Room.query.first().id):
     if char is None: 
             return redirect(url_for('character_profile'))
 

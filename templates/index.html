@@ -16,7 +16,7 @@ $( document ).ready(function() {
 		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 			<p id="console">Not ready yet.</p>
 		</div>
-		{% if opponent is defined %}
+		{% if opponent.name is defined %}
 		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 			<a href="{{ url_for('attack') }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
 					Attack

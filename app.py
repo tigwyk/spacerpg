@@ -163,17 +163,25 @@ def move_character(destination_id,char=None):
 
     #for demo purposes
     monster = NPC(name="Testy",attributes={'strength':5,'dexterity':5,'intelligence':5})
+    db.session.add(monster)
+    db.session.commit()
 
     monster_pool.append(monster)
 
     if destination != current_loc:
         nearest_exits = current_loc.exits + current_loc.linked_rooms
         if destination in nearest_exits:
-            if char.dexterity_check(monster_pool[0]) is False:
-                char.opponent = monster_pool[0]            
-                db.session.add(char)
-                db.session.commit()
-                flash('You have encountered {}! Prepare for combat!'.format(char.opponent.name))
+            if monster_pool:
+                if monster_pool[0].dexterity_roll() > char.dexterity_roll():
+                    char.opponent = monster_pool[0]            
+                    db.session.add(char)
+                    db.session.commit()
+                    flash('You have encountered {}! Prepare for combat!'.format(char.opponent.name),'error')
+                else:
+                    char.location = destination
+                    db.session.add(char)
+                    db.session.commit()
+                    flash('Successfully moved to {}.'.format(char.location.name),'error')
             else:
                 char.location = destination
                 db.session.add(char)

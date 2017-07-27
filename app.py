@@ -211,22 +211,24 @@ def attack():
     npc_attack_result = opponent.attack(character)
 
     if player_attack_result > 0:
-        combat_results = 'You hit {} for {} damage.'.format(opponent.name, player_attack_result)
+        player_combat_results = 'You hit {} for {} damage.'.format(opponent.name, player_attack_result)
         if opponent.hps < 0:
-            combat_results += " "+opponent.die(character)
+            player_combat_results += " "+opponent.die(character)
     elif player_attack_result == 0:
-        combat_results = 'You hit {} for no damage.'.format(opponent.name)
+        player_combat_results = 'You hit {} for no damage.'.format(opponent.name)
     else:
-        combat_results = 'You missed your attack on {}.'.format(opponent.name)
+        player_combat_results = 'You missed your attack on {}.'.format(opponent.name)
 
     if npc_attack_result > 0:
-        combat_results = '{} hit you for {} damage.'.format(opponent.name, npc_attack_result)
+        npc_combat_results = '{} hit you for {} damage.'.format(opponent.name, npc_attack_result)
         if opponent.hps < 0:
-            combat_results += " "+opponent.die(character)
+            npc_combat_results += " "+opponent.die(character)
         elif npc_attack_result == 0:
-            combat_results = '{} hit you for no damage.'.format(opponent.name)
+            npc_combat_results = '{} hit you for no damage.'.format(opponent.name)
         else:
-            combat_results = '{} missed their attack.'.format(opponent.name)
+            npc_combat_results = '{} missed their attack.'.format(opponent.name)
+
+    combat_results = player_combat_results+' '+npc_combat_results
 
     return render_template('attack.html',character=character,combat_results=combat_results)
 

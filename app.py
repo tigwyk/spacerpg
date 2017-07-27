@@ -207,8 +207,8 @@ def attack():
     if opponent is None:
         return redirect(url_for('index'))
 
-    
     attack_result = character.attack(character.opponent)
+
     if attack_result > 0:
         combat_results = 'You hit {} for {} damage.'.format(opponent.name, attack_result)
     elif attack_result == 0:

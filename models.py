@@ -195,12 +195,14 @@ class NPC(db.Model):
             self.die(attacker)
         else:
             self.hps = self.hps - damage
+            db.session.add(self)
+            db.session.commit()
 
     def die(self, killer):
         msg = '{} killed {}.'.format(killer.name, self.name)
         db.session.delete(self)
         db.session.commit()
-        return jsonify(msg)
+        return msg
 
 
 class Character(db.Model):

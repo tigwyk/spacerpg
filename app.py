@@ -215,7 +215,7 @@ def attack():
     else:
         combat_results = 'You missed your attack on {}.'.format(opponent.name)
 
-    return render_template('index.html',character=character,combat_results=combat_results)
+    return redirect(url_for('index',character=character,combat_results=combat_results))
 
 @app.route('/run_away')
 @flask_login.login_required

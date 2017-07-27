@@ -190,10 +190,19 @@ class NPC(db.Model):
         roll = random.uniform(0, dex)
         return roll
 
-    def take_damage(self, attacker, damage):
+    def take_damage(self, damage):
         self.hps = self.hps - damage
         db.session.add(self)
         db.session.commit()
+
+    def attack(self, character):
+        if combat_hit_check(self, character):
+            damage = random.randint(0,int(self.attributes['strength'])) 
+            #if armor_absorb fails
+            character.take_damage(damage)
+            return damage
+        else:
+            return -1
 
     def die(self, killer):
         msg = '{} killed {}.'.format(killer.name, self.name)
@@ -235,12 +244,18 @@ class Character(db.Model):
 
     def attack(self, npc):
         if combat_hit_check(self, npc):
-            damage = 1
+            damage = random.randint(0,int(self.attributes['strength']))
             #if armor_absorb fails
-            npc.take_damage(self, damage)
+            npc.take_damage(damage)
             return damage
         else:
             return -1
+
+    def take_damage(self, damage):
+        self.hps = self.hps - damage
+        db.session.add(self)
+        db.session.commit()
+
 
 def combat_hit_check(player, npc):
     if player.dexterity_roll() > npc.dexterity_roll():

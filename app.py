@@ -192,7 +192,7 @@ def move_character(destination_id,char=None):
             flash('Failed to move. Destination not close enough.','error')
     else:
         flash('Failed to move. Destination is current location.','error')
-        
+
     return redirect(url_for('index'))
 
 @app.route('/attack')
@@ -207,16 +207,26 @@ def attack():
     if opponent is None:
         return redirect(url_for('index'))
 
-    attack_result = character.attack(character.opponent)
+    player_attack_result = character.attack(character.opponent)
+    npc_attack_result = opponent.attack(character)
 
-    if attack_result > 0:
-        combat_results = 'You hit {} for {} damage.'.format(opponent.name, attack_result)
+    if player_attack_result > 0:
+        combat_results = 'You hit {} for {} damage.'.format(opponent.name, player_attack_result)
         if opponent.hps < 0:
-            combat_results += opponent.die(character)
-    elif attack_result == 0:
+            combat_results += " "+opponent.die(character)
+    elif player_attack_result == 0:
         combat_results = 'You hit {} for no damage.'.format(opponent.name)
     else:
         combat_results = 'You missed your attack on {}.'.format(opponent.name)
+
+    if npc_attack_result > 0:
+        combat_results = '{} hit you for {} damage.'.format(opponent.name, npc_attack_result)
+        if opponent.hps < 0:
+            combat_results += " "+opponent.die(character)
+        elif npc_attack_result == 0:
+            combat_results = '{} hit you for no damage.'.format(opponent.name)
+        else:
+            combat_results = '{} missed their attack.'.format(opponent.name)
 
     return render_template('attack.html',character=character,combat_results=combat_results)
 
@@ -228,7 +238,7 @@ def run_away():
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 #Game Logic Stuff
 

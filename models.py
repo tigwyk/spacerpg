@@ -172,13 +172,15 @@ class NPC(db.Model):
     opponent_id = db.Column(db.Integer, db.ForeignKey('character.id'))
     race = db.Column(db.String(64))
     hps = db.Column(db.Integer)
+    max_hps = db.Column(db.Integer)
 
     def __init__(self, name='',credits=0,race='human'):
         self.name = name
         self.attributes = {'strength':5,'dexterity':5,'intelligence':5,'max_str':5, 'max_dex':5, 'max_int':5}
         self.credits = credits
         self.race = race
-        self.hps = self.attributes['strength']*3
+        self.max_hps = self.attributes['strength']*3
+        self.hps = self.max_hps
 
     def __repr__(self):
         return '<NPC {}#{}>'.format(self.name, self.id)
@@ -211,6 +213,7 @@ class Character(db.Model):
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     opponent = db.relationship('NPC',uselist=False,backref='opponent')
     hps = db.Column(db.Integer)
+    max_hps = db.Column(db.Integer)
     title = db.Column(db.String(128))
 
     def __init__(self, name=''):
@@ -220,7 +223,8 @@ class Character(db.Model):
         self.name = name
         self.attributes = {'strength':5, 'dexterity':5, 'intelligence':5,'max_str':str_max, 'max_dex':dex_max, 'max_int':int_max}
         self.credits = 0
-        self.hps = self.attributes['strength']*3
+        self.max_hps = self.attributes['strength']*3
+        self.hps = self.max_hps
 
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)

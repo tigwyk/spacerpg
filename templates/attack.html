@@ -9,6 +9,12 @@ $( document ).ready(function() {
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		Location: {{ character.opponent.name | default(character.location.name) }}
 	</div>
+	<div class="mdl-cell mdl-cell--2-col">
+		Your HP: {{ character.hps }} / {{ character.max_hps }}
+	</div>
+	<div class="mdl cell mdl-cell--2-col mdl-cell--8-col-offset">
+		Opponent HP: {{ character.opponent.hps }} / {{ character.opponent.max_hps }}
+	</div>
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 			<img class="img-responsive" src="http://via.placeholder.com/675x150?text={{ character.opponent.name | default(character.location.name) }}"/>

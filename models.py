@@ -236,8 +236,8 @@ class Character(Living):
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     title = db.Column(db.String(128))
 
-    def __init__(self):
-        self.__init___(name='',race='')
+    def __init__(self,name='',race='human'):
+        self.__init___(name,race)
         self.title = ''
 
     def __repr__(self):

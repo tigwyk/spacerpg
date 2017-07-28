@@ -213,6 +213,14 @@ def attack():
     player_attack_result = character.attack(character.opponent)
     npc_attack_result = opponent.attack(character)
 
+    if player_attack_result is None:
+        flash('Something broke. Inform a dev that we did not get a player attack result.', 'error')
+        return redirect(url_for('index'))
+
+    if npc_attack_result is None:
+        flash('Something broke. Inform a dev that we did not get an npc attack result.','error')
+        return redirect(url_for('index'))
+
     player_combat_msg = ''
     npc_combat_msg = ''
 

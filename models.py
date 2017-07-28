@@ -95,16 +95,16 @@ class Item(db.Model):
 
 class Weapon(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'),primary_key=True)
-    damage = db.Column(db.Integer)
+    damage_dice = db.Column(db.String(32))
 
     @property
     def is_weapon():
         return True
 
-    def __init__(self, name='',damage=0):
+    def __init__(self, name='',damage_dice=''):
         self.name = name
-        self.damage = damage
-        self.slot = 'hands'
+        self.damage_dice = damage_dice
+        self.slot = 'weapon'
 
     def __repr__(self):
         return '<Weapon {}#{}>'.format(self.name, self.id)
@@ -181,7 +181,7 @@ class Living(db.Model):
         self.race = race
         self.max_hps = self.attributes['strength']*3
         self.hps = self.max_hps
-        self.body = {'head':None,'chest':None, 'hands':None,'legs':None,'feet':None,'wielded':None}
+        self.body = {'head':None,'chest':None, 'hands':None,'legs':None,'feet':None,'weapon':None}
 
 
     def dexterity_roll(self):
@@ -191,7 +191,7 @@ class Living(db.Model):
 
     def attack(self, npc):
         if combat_hit_check(self, npc):
-            wielded_weapon_id = self.body['wielded']
+            wielded_weapon_id = self.body['weapon']
             if not wielded_weapon_id:
                 damage = random.randint(0,int(self.attributes['strength']))
             else:

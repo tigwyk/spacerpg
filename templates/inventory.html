@@ -13,7 +13,7 @@
 		<tr>
 			<th class="mdl-data-table__cell--non-numeric fullwidth">Name</th>
 			<th class="mdl-data-table__cell--non-numeric">Type</th>
-			<th class="mdl-data-table__cell--non-numeric">Slot</th>
+			<th class="mdl-data-table__cell--non-numeric"></th>
 			<th>Value</th>
 		</tr>
 	</thead>
@@ -22,7 +22,7 @@
 <tr>
 	<td class="mdl-data-table__cell--non-numeric fullwidth">{{item.name}}</td>
 	<td class="mdl-data-table__cell--non-numeric">{{item.type}}</td>
-	<td class="mdl-data-table__cell--non-numeric">{{item.slot}}</td>
+	<td class="mdl-data-table__cell--non-numeric">{% if item.slot is defined %} <a href="{{url_for('equip', item_id=item.id)}}">Equip</a> {% endif %}</td>
 	<td>{{item.value}}</td>
 </tr>
 {% endfor %}

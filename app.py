@@ -122,11 +122,11 @@ def character_profile():
             else:
                 character = Character(name=form.name.data)
                 character.title = 'the newly landed'
+                character.location = Room.query.first()
                 db.session.add(character)
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)
                 db.session.commit()
-                character.location = Room.query.first()
                 flash('Character created! Welcome to Deimos 2147!','error')
                 return redirect(url_for('character_profile'))
         else:

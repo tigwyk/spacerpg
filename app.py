@@ -125,7 +125,7 @@ def character_profile():
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)
                 db.session.commit()
-                move_character(character,3)
+                move_character(3,char=character)
                 flash('Character created! Welcome to Deimos 2147!','error')
                 return redirect(url_for('character_profile'))
         else:

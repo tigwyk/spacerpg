@@ -187,8 +187,8 @@ class Living(db.Model):
         roll = random.uniform(0, dex)
         return roll
 
-    def attack(self, npc):
-        if combat_hit_check(self, npc):
+    def attack(self, opponent):
+        if combat_hit_check(self, opponent):
             wielded_weapon_id = self.body['weapon']
             if not wielded_weapon_id:
                 damage = random.randint(0,int(self.attributes['strength']))
@@ -207,16 +207,16 @@ class Living(db.Model):
                 damage = total_roll
                 #target_body_part = roll_for_body_part()
                 #if armor_absorb fails
-                npc.take_damage(damage)
-                return damage
+                damage_done = opponent.take_damage(damage)
+                return damage_done
         else:
             return -1
                 
     def take_damage(self, damage):
-        self.hps = self.hps - damage
-        db.session.add(self)
-        db.session.commit()
-
+        #armor absorbtion
+        damage_taken = damage
+        self.hps = self.hps - damage_taken
+        return damage_taken
 
 class NPC(Living):
     __tablename__ = 'npc'

@@ -245,7 +245,7 @@ class Character(Living):
 
 def roll_for_body_part():
     body_parts = ['head','chest','arms','legs','left_hand','right_hand','feet']
-    bias_list = [10,50,5,30,5,5,5]
+    bias_list = [0.10,0.50,0.05,0.30,0.05,0.05,0.05]
 
     roll = random.uniform(0, sum(bias_list))
     current = 0

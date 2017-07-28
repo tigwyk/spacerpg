@@ -201,11 +201,13 @@ def move_character(destination_id,char=None):
 def attack():
     character = flask_login.current_user.character
     if character is None:
+        flash('You cannot attack without a character.','error')
         return redirect(url_for('character_profile'))
 
     opponent = character.opponent
 
     if opponent is None:
+        flash('Your opponent is dead so you move on.', 'error')
         return redirect(url_for('index'))
 
     player_attack_result = character.attack(character.opponent)
@@ -235,6 +237,36 @@ def attack():
     combat_results = player_combat_msg+' '+npc_combat_msg
 
     return render_template('attack.html',character=character,combat_results=combat_results)
+
+@app.route('/equip/<int:item_id>')
+@flask_login.login_required
+def equip(item_id):
+    character = flask_login.current_user.character
+    if character is None:
+        flash('You have not created a character yet!', 'error')
+        return redirect(url_for('character_profile'))
+    
+    if item_id is None:
+        flash('Nothing specified to equip.','error')
+        return redirect(url_for('inventory'))
+
+    item = Item.query.get(item_id)
+    if item is None:
+        flash('That item does not exist. Oops! Tell a dev.', 'error')
+        return redirect(url_for('inventory'))
+
+    if item not in character.inventory:
+        flash('You are not carrying that item and therefore cannot equip it.', 'error')
+        return redirect(url_for('inventory'))
+
+    if character.wearing[item.slot]:
+        flash('That equipment slot is occupied already.','error')
+        return redirect(url_for('inventory'))
+
+    character.wearing[item.slot] = item.id
+    db.session.add(character)
+    db.session.commit()
+    return redirect(url_for('inventory'))
 
 @app.route('/run_away')
 @flask_login.login_required

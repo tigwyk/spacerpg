@@ -81,6 +81,7 @@ class Item(db.Model):
     description = db.Column(db.String(256))
     subtitle = db.Column(db.String(256))
     value = db.Column(db.Integer)
+    slot = db.Column(db.String(32))
 
     def __init__(self, name='',type='',description='',subtitle='',value=0):
         self.name = name
@@ -96,7 +97,6 @@ class Weapon(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'),primary_key=True)
     damage = db.Column(db.Integer)
 
-
     @property
     def is_weapon():
         return True
@@ -104,6 +104,7 @@ class Weapon(Item):
     def __init__(self, name='',damage=0):
         self.name = name
         self.damage = damage
+        self.slot = 'hands'
 
     def __repr__(self):
         return '<Weapon {}#{}>'.format(self.name, self.id)
@@ -116,9 +117,10 @@ class Armor(Item):
     def is_armor():
         return True
 
-    def __init__(self, name='',ac=0):
+    def __init__(self, name='',ac=0,slot='chest'):
         self.name = name
         self.ac = ac
+        self.slot = slot
 
     def __repr__(self):
         return '<Armor {}#{}>'.format(self.name, self.id)
@@ -179,7 +181,7 @@ class Living(db.Model):
         self.race = race
         self.max_hps = self.attributes['strength']*3
         self.hps = self.max_hps
-        self.body = {'head':None,'chest':None, 'arms':None,'legs':None,'left_hand':None,'right_hand':None,'feet':None}
+        self.body = {'head':None,'chest':None, 'hands':None,'legs':None,'feet':None,'wielded':None}
 
 
     def dexterity_roll(self):
@@ -187,13 +189,14 @@ class Living(db.Model):
         roll = random.uniform(0, dex)
         return roll
 
-    def attack(self, npc,hand='right_hand'):
+    def attack(self, npc):
         if combat_hit_check(self, npc):
-            if not self.body[hand]:
+            wielded_weapon_id = self.body['wielded']
+            if not wielded_weapon_id:
                 damage = random.randint(0,int(self.attributes['strength']))
             else:
-                held_weapon = self.body[hand]
-                num_dice,sides = held_weapon.damage.split('d')
+                wielded_weapon = Weapon.query.get(wielded_weapon_id)
+                num_dice,sides = wielded_weapon.damage.split('d')
                 num_dice = int(num_dice)
                 sides = int(sides)
                 total_roll = 0
@@ -240,8 +243,8 @@ class Character(Living):
         return '<Character {}#{}>'.format(self.name, self.id)
 
 def roll_for_body_part():
-    body_parts = ['head','chest','arms','legs','left_hand','right_hand','feet']
-    bias_list = [0.10,0.50,0.05,0.30,0.05,0.05,0.05]
+    body_parts = ['head','chest','hands','legs','feet']
+    bias_list = [0.10,0.50,0.05,0.30,0.05]
 
     roll = random.uniform(0, sum(bias_list))
     current = 0

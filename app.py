@@ -120,7 +120,7 @@ def character_profile():
                 flash('Character name already in use. Try again.','error')
                 return redirect(url_for('character_profile'))
             else:
-                character = Character(name=form.name.data,race='human')
+                character = Character(name=form.name.data)
                 db.session.add(character)
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)

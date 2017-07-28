@@ -168,7 +168,7 @@ def move_character(destination_id,char=None):
     #db.session.add(monster)
     #db.session.commit()
 
-    monster_pool.append(monster)
+    #monster_pool.append(monster)
 
     if destination != current_loc:
         nearest_exits = current_loc.exits + current_loc.linked_rooms

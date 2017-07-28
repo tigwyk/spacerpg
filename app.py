@@ -47,12 +47,6 @@ def index():
 
     return render_template('index.html', character=character,nearest_exits=nearest_exits)
 
-@app.route('/add', methods=['POST'])
-@flask_login.login_required
-def add_entry():
-    flash('New entry was successfully posted')
-    return redirect(url_for('index'))
-
 @app.route('/register', methods=['POST','GET'])
 def register():
     form = RegistrationForm()
@@ -226,8 +220,6 @@ def attack():
 
     if player_attack_result > 0:
         player_combat_msg = 'You hit {} for {} damage.'.format(opponent.name, player_attack_result)
-        if opponent.hps < 0:
-            player_combat_msg += " "+opponent.die(character)
     elif player_attack_result == 0:
         player_combat_msg = 'You hit {} for no damage.'.format(opponent.name)
     else:
@@ -235,8 +227,6 @@ def attack():
 
     if npc_attack_result > 0:
         npc_combat_msg = '{} hit you for {} damage.'.format(opponent.name, npc_attack_result)
-        if opponent.hps < 0:
-            npc_combat_msg += " "+opponent.die(character)
     elif npc_attack_result == 0:
         npc_combat_msg = '{} hit you for no damage.'.format(opponent.name)
     else:
@@ -244,6 +234,9 @@ def attack():
 
     combat_results = player_combat_msg+' '+npc_combat_msg
 
+    if opponent.hps < 0:
+        combat_results += " "+opponent.die(character)
+    
     return render_template('attack.html',character=character,combat_results=combat_results)
 
 @app.route('/equip/<int:item_id>')

@@ -37,15 +37,15 @@
 	<tbody>
 		<tr>
 			<td class="mdl-data-table__cell--non-numeric full-width">Strength</td>
-			<td>{{character.attributes['strength']}}</td>
+			<td>{{character.attributes['strength'] | float }}</td>
 		</tr>
 		<tr>
 			<td class="mdl-data-table__cell--non-numeric full-width">Dexterity</td>
-			<td>{{character.attributes['dexterity']}}</td>
+			<td>{{character.attributes['dexterity'] | float }}</td>
 		</tr>
 		<tr>
 			<td class="mdl-data-table__cell--non-numeric full-width">Intelligence</td>
-			<td>{{character.attributes['intelligence']}}</td>
+			<td>{{character.attributes['intelligence'] | float }}</td>
 		</tr>
 	</tbody>
 </table>

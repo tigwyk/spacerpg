@@ -121,6 +121,7 @@ def character_profile():
                 return redirect(url_for('character_profile'))
             else:
                 character = Character(name=form.name.data)
+                character.title = 'the newly landed'
                 db.session.add(character)
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)

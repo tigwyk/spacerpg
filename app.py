@@ -125,7 +125,7 @@ def character_profile():
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)
                 db.session.commit()
-                character.location = Room.query.first_or_404(3)
+                character.location = Room.query.first()
                 flash('Character created! Welcome to Deimos 2147!','error')
                 return redirect(url_for('character_profile'))
         else:
@@ -157,7 +157,7 @@ def move_character(destination_id,char=None):
     if char.opponent:
         return redirect(url_for('attack'))
 
-    destination = Room.query.first_or_404(destination_id)
+    destination = Room.query.get(destination_id)
     current_loc = char.location
 
     monster_pool = []

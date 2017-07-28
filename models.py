@@ -115,7 +115,7 @@ class Armor(Item):
     @property
     def is_armor():
         return True
-    
+
     def __init__(self, name='',ac=0):
         self.name = name
         self.ac = ac
@@ -151,58 +151,77 @@ class Room(db.Model):
     def __repr__(self):
         return '<Room {}#{}>'.format(self.name, self.id)
 
-player_inventory_table = db.Table('player_inventory_table', 
-        db.Column('character_id', db.Integer, db.ForeignKey('character.id'),nullable=False),
+inventory_table = db.Table('inventory_table', 
+        db.Column('living_id', db.Integer, db.ForeignKey('living.id'),nullable=False),
         db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
-        db.PrimaryKeyConstraint('character_id', 'item_id') )
+        db.PrimaryKeyConstraint('living_id', 'item_id') )
 
-npc_inventory_table = db.Table('npc_inventory_table',
-        db.Column('npc_id', db.Integer, db.ForeignKey('npc.id'),nullable=False),
-        db.Column('item_id', db.Integer, db.ForeignKey('item.id'),nullable=False),
-        db.PrimaryKeyConstraint('npc_id', 'item_id') )
-
-
-class NPC(db.Model):
-    __tablename__ = 'npc'
+class Living(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
-    inventory = db.relationship('Item', secondary=npc_inventory_table)
+    inventory = db.relationship('Item', secondary=inventory_table)
     attributes = db.Column(JSON)
+    body = db.Column(JSON)
     credits = db.Column(db.Integer)
-    opponent_id = db.Column(db.Integer, db.ForeignKey('character.id'))
+    opponent_id = db.Column(db.Integer, db.ForeignKey('living.id'))
+    opponent = db.relationship('Living',remote_side=[id])
     race = db.Column(db.String(64))
     hps = db.Column(db.Integer)
     max_hps = db.Column(db.Integer)
 
-    def __init__(self, name='',credits=0,race='human'):
+    def __init__(self, name='',race='human'):
+        str_max = random.uniform(9,11)
+        dex_max = random.uniform(8,10)
+        int_max = random.uniform(8,10)
         self.name = name
-        self.attributes = {'strength':5,'dexterity':5,'intelligence':5,'max_str':5, 'max_dex':5, 'max_int':5}
-        self.credits = credits
+        self.attributes = {'strength':5, 'dexterity':5, 'intelligence':5,'max_str':str_max, 'max_dex':dex_max, 'max_int':int_max}
+        self.credits = 0
         self.race = race
         self.max_hps = self.attributes['strength']*3
         self.hps = self.max_hps
+        self.body = {'head':None,'chest':None, 'arms':None,'legs':None,'left_hand':None,'right_hand':None,'feet':None}
 
-    def __repr__(self):
-        return '<NPC {}#{}>'.format(self.name, self.id)
 
     def dexterity_roll(self):
         dex = self.attributes['dexterity']
         roll = random.uniform(0, dex)
         return roll
 
+    def attack(self, npc,hand='right_hand'):
+        if combat_hit_check(self, npc):
+            if not self.body[hand]:
+                damage = random.randint(0,int(self.attributes['strength']))
+            else:
+                held_weapon = self.body[hand]
+                num_dice,sides = held_weapon.damage.split('d')
+                num_dice = int(num_dice)
+                sides = int(sides)
+                total_roll = 0
+
+                for i in range(1,num_dice):
+                    roll_result = random.randint(1,sides)
+                    total_roll += roll_result
+
+                damage = total_roll
+                #target_body_part = roll_for_body_part()
+                #if armor_absorb fails
+                npc.take_damage(damage)
+                return damage
+        else:
+            return -1
+                
     def take_damage(self, damage):
         self.hps = self.hps - damage
         db.session.add(self)
         db.session.commit()
 
-    def attack(self, character):
-        if combat_hit_check(self, character):
-            damage = random.randint(0,2) 
-            #if armor_absorb fails
-            character.take_damage(damage)
-            return damage
-        else:
-            return -1
+
+class NPC(Living):
+    __tablename__ = 'npc'
+    id = db.Column(db.Integer, db.ForeignKey('living.id'),primary_key=True)
+
+    def __repr__(self):
+        return '<NPC {}#{}>'.format(self.name, self.id)
 
     def die(self, killer):
         msg = '{} killed {}.'.format(killer.name, self.name)
@@ -211,51 +230,29 @@ class NPC(db.Model):
         return msg
 
 
-class Character(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(64))
+class Character(Living):
+    id = db.Column(db.Integer, db.ForeignKey('living.id'), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    attributes = db.Column(JSON)
-    inventory = db.relationship('Item', secondary=player_inventory_table)
-    credits = db.Column(db.Integer)
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
-    opponent = db.relationship('NPC',uselist=False,backref='opponent')
-    hps = db.Column(db.Integer)
-    max_hps = db.Column(db.Integer)
     title = db.Column(db.String(128))
 
-    def __init__(self, name=''):
-        str_max = random.uniform(9,11)
-        dex_max = random.uniform(8,10)
-        int_max = random.uniform(8,10)
-        self.name = name
-        self.attributes = {'strength':5, 'dexterity':5, 'intelligence':5,'max_str':str_max, 'max_dex':dex_max, 'max_int':int_max}
-        self.credits = 0
-        self.max_hps = self.attributes['strength']*3
-        self.hps = self.max_hps
+    def __init__(self):
+        self.__init___(name='',race='')
+        self.title = ''
 
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)
 
-    def dexterity_roll(self):
-        dex = self.attributes['dexterity']
-        roll = random.uniform(0, dex)
-        return roll
+def roll_for_body_part():
+    body_parts = ['head','chest','arms','legs','left_hand','right_hand','feet']
+    bias_list = [10,50,5,30,5,5,5]
 
-    def attack(self, npc):
-        if combat_hit_check(self, npc):
-            damage = random.randint(0,int(self.attributes['strength']))
-            #if armor_absorb fails
-            npc.take_damage(damage)
-            return damage
-        else:
-            return -1
-
-    def take_damage(self, damage):
-        self.hps = self.hps - damage
-        db.session.add(self)
-        db.session.commit()
-
+    roll = random.uniform(0, sum(bias_list))
+    current = 0
+    for i, bias in enumerate(bias_list):
+        current += bias
+        if roll <= current:
+            return i+1
 
 def combat_hit_check(player, npc):
     if player.dexterity_roll() > npc.dexterity_roll():

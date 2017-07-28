@@ -8,8 +8,7 @@
 	</a>
 </div>
 <div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-{% if inventory is defined %}
-<table class="mdl-data-table mdl-js-data-table full-width">
+<table class="mdl-data-table mdl-js-data-table full-width dark-theme">
 	<thead>
 		<tr>
 			<th class="mdl-data-table__cell--non-numeric fullwidth">Name</th>
@@ -27,9 +26,6 @@
 {% endfor %}
 	</tbody>
 </table>
-{% else %}
-Undefined
-{% endif %}
 </div>
 </div>
 {% endblock%}

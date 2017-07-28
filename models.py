@@ -192,6 +192,7 @@ class Living(db.Model):
             wielded_weapon_id = self.body['weapon']
             if not wielded_weapon_id:
                 damage = random.randint(0,int(self.attributes['strength']))
+                return damage
             else:
                 wielded_weapon = Weapon.query.get(wielded_weapon_id)
                 num_dice,sides = wielded_weapon.damage.split('d')

@@ -234,7 +234,7 @@ def attack():
 
     combat_results = player_combat_msg+' '+npc_combat_msg
 
-    if opponent.hps < 0:
+    if opponent.hps < 1:
         combat_results += " "+opponent.die(character)
     
     return render_template('attack.html',character=character,combat_results=combat_results)

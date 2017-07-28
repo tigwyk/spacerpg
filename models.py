@@ -192,6 +192,7 @@ class Living(db.Model):
             wielded_weapon_id = self.body['weapon']
             if not wielded_weapon_id:
                 damage = random.randint(0,int(self.attributes['strength']))
+                opponent.take_damage(damage)
                 return damage
             else:
                 wielded_weapon = Weapon.query.get(wielded_weapon_id)
@@ -216,6 +217,8 @@ class Living(db.Model):
         #armor absorbtion
         damage_taken = damage
         self.hps = self.hps - damage_taken
+        db.session.add(self)
+        db.session.commit()
         return damage_taken
 
 class NPC(Living):

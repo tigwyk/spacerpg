@@ -165,8 +165,6 @@ class Living(db.Model):
     attributes = db.Column(JSON)
     body = db.Column(JSON)
     credits = db.Column(db.Integer)
-    opponent_id = db.Column(db.Integer, db.ForeignKey('living.id'))
-    opponent = db.relationship('Living',remote_side=[id])
     race = db.Column(db.String(64))
     hps = db.Column(db.Integer)
     max_hps = db.Column(db.Integer)
@@ -238,6 +236,8 @@ class Character(Living):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     location_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     title = db.Column(db.String(128))
+    opponent_id = db.Column(db.Integer, db.ForeignKey('npc.id'))
+    opponent = db.relationship('NPC',backref='opponent',foreign_keys=[opponent_id])
 
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)

@@ -237,7 +237,7 @@ class Character(Living):
     title = db.Column(db.String(128))
 
     def __init__(self,name='',race='human'):
-        self.__init___(name,race)
+        self.__init__(name,race)
         self.title = ''
 
     def __repr__(self):

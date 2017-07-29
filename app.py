@@ -301,7 +301,7 @@ def generate_starter_equipment(character):
     hands = Armor(name='Cheap Combat Gloves',slot='hands',ac=10,value=100)
     legs = Armor(name='Cheap Combat Legplates',slot='legs',ac=10,value=100)
     feet = Armor(name='Cheap Combat Boots',slot='feet',ac=10,value=100)
-    weapon = Weapon(name='Cheap Martian M16 Knockoff',slot='weapon',damage_dice='2d4',value=100)
+    weapon = Weapon(name='Cheap Martian M16 Knockoff',damage_dice='2d4',value=100)
     db.session.add(chest)
     db.session.add(head)
     db.session.add(hands)

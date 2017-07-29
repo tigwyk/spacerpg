@@ -9,18 +9,23 @@ $( document ).ready(function() {
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		Location: {{ character.location.name }}
 	</div>
+	<div class="mdl-cell mdl-cell--12-col">
+		{{ character.name }}
+	</div>
+	<div class="mdl-cell mdl-cell--2-col">
+		Your HP: {{ character.hps }} / {{ character.max_hps }}
+	</div>
+
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-			<img class="img-responsive" src="http://via.placeholder.com/675x150?text={{ character.location.name }}"/>
-		</div>
-		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-			<p id="console">Not ready yet.</p>
-		</div>
-					{% for exit in nearest_exits %}
-						<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-							<a href="{{ url_for('move_character',destination_id=exit.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"><i class="material-icons">exit_to_app</i> Travel: {{exit.name}}</button></a>
-						</div>
-						{% endfor %}
-</div>
+		<img class="img-responsive" src="http://via.placeholder.com/675x150?text={{ character.location.name }}"/>
+	</div>
+	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+		<p id="console">Not ready yet.</p>
+	</div>
+	{% for exit in nearest_exits %}
+	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
+		<a href="{{ url_for('move_character',destination_id=exit.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"><i class="material-icons">exit_to_app</i> Travel: {{exit.name}}</button></a>
+	</div>
+	{% endfor %}
 </div>
 {% endblock%}

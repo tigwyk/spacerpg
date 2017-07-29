@@ -226,8 +226,9 @@ class Living(db.Model):
             return False
 
         item_slot = item.slot
-        self.body.update({item_slot : item.id})
-        db.session.merge(self)
+        updated_body = self.body.update({item_slot : item.id})
+        self.body = updated.body
+        db.session.add(self)
         db.session.commit()
         return True
 

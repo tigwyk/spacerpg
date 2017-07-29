@@ -264,7 +264,7 @@ def equip(item_id):
         flash('That equipment slot is occupied already.','error')
         return redirect(url_for('inventory'))
 
-    character.equip(item_id)
+    character.equip(item)
     flash('You equipped {}.'.format(item.name))
     return redirect(url_for('inventory'))
 

@@ -239,7 +239,10 @@ def attack():
         combat_results += " "+opponent.die(character)
     
     weapon_id = character.body['weapon']
-    weapon = Weapon.query.get(weapon_id)
+    if weapon_id:
+        weapon = Weapon.query.get(weapon_id)
+    else:
+        weapon = None
 
     return render_template('attack.html',character=character,combat_results=combat_results,weapon=weapon)
 

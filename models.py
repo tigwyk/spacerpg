@@ -230,7 +230,6 @@ class Living(db.Model):
         self.body = updated_body
         db.session.add(self)
         db.session.commit()
-        db.session.close()
         return True
 
 class NPC(Living):

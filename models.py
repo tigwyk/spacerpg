@@ -221,6 +221,14 @@ class Living(db.Model):
         db.session.commit()
         return damage_taken
 
+    def equip(self, item):
+        if not item:
+            return False
+
+        item_slot = item.slot
+        self.body[item_slot] = item.id
+        return True
+
 class NPC(Living):
     __tablename__ = 'npc'
     id = db.Column(db.Integer, db.ForeignKey('living.id'),primary_key=True)

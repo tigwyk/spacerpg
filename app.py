@@ -264,6 +264,13 @@ def equip(item_id):
         flash('You are not carrying that item and therefore cannot equip it.', 'error')
         return redirect(url_for('inventory'))
 
+    if character.body[item.slot] == item.id:
+        flash('You unequip {}.'.format(item.name),'error')
+        character.body[item.slot] = None
+        db.session.add(character)
+        db.session.commit()
+        return redirect(url_for('inventory'))
+
     if character.body[item.slot] is not None:
         flash('That equipment slot is occupied already.','error')
         return redirect(url_for('inventory'))

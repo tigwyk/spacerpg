@@ -23,7 +23,17 @@
 <tr>
 	<td class="mdl-data-table__cell--non-numeric fullwidth">{{item.name}}</td>
 	<td class="mdl-data-table__cell--non-numeric">{{item.type}}</td>
-	<td class="mdl-data-table__cell--non-numeric">{% if item.slot is defined %} <a href="{{url_for('equip', item_id=item.id)}}">Equip</a> {% endif %}</td>
+	<td class="mdl-data-table__cell--non-numeric">
+		{% if item.slot is defined %}
+	       	<a href="{{url_for('equip', item_id=item.id)}}">
+			{% if worn_items[item.slot] == item.id %}
+			Unequip
+			{% else %}
+			Equip
+			{% endif%}
+		</a> 
+		{% endif %}
+	</td>
 	<td class="mdl-data-table__cell--non-numeric">{% if worn_items[item.slot] == item.id %} {{ item.slot }} {% endif %}</td>
 	<td>{{item.value}}</td>
 </tr>

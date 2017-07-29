@@ -1,4 +1,5 @@
 from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy.ext.mutable import MutableDict
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask_login import UserMixin,current_user
 from app import app,db,bcrypt
@@ -162,8 +163,8 @@ class Living(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128))
     inventory = db.relationship('Item', secondary=inventory_table)
-    attributes = db.Column(JSON)
-    body = db.Column(JSON)
+    attributes = db.Column(MutableDict.as_mutable(JSON))
+    body = db.Column(MutableDict.as_mutable(JSON))
     credits = db.Column(db.Integer)
     race = db.Column(db.String(64))
     hps = db.Column(db.Integer)

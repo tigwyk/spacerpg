@@ -197,7 +197,7 @@ class Living(db.Model):
                 return damage
             else:
                 wielded_weapon = Weapon.query.get(wielded_weapon_id)
-                num_dice,sides = wielded_weapon.damage.split('d')
+                num_dice,sides = wielded_weapon.damage_dice.split('d')
                 num_dice = int(num_dice)
                 sides = int(sides)
                 total_roll = 0

@@ -264,7 +264,7 @@ def equip(item_id):
         flash('That equipment slot is occupied already.','error')
         return redirect(url_for('inventory'))
 
-    character.wearing[item.slot] = item.id
+    character.body[item.slot] = item.id
     db.session.add(character)
     db.session.commit()
     return redirect(url_for('inventory'))

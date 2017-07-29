@@ -14,6 +14,7 @@
 			<th class="mdl-data-table__cell--non-numeric fullwidth">Name</th>
 			<th class="mdl-data-table__cell--non-numeric">Type</th>
 			<th class="mdl-data-table__cell--non-numeric"></th>
+			<th class="mdl-data-table__cell--non-numeric">Worn</th>
 			<th>Value</th>
 		</tr>
 	</thead>
@@ -23,6 +24,7 @@
 	<td class="mdl-data-table__cell--non-numeric fullwidth">{{item.name}}</td>
 	<td class="mdl-data-table__cell--non-numeric">{{item.type}}</td>
 	<td class="mdl-data-table__cell--non-numeric">{% if item.slot is defined %} <a href="{{url_for('equip', item_id=item.id)}}">Equip</a> {% endif %}</td>
+	<td class="mdl-data-table__cell--non-numeric">{% if character.body[item.slot] == item.id %} {{ item.slot }} {% endif %}</td>
 	<td>{{item.value}}</td>
 </tr>
 {% endfor %}

@@ -238,7 +238,10 @@ def attack():
     if opponent.hps < 1:
         combat_results += " "+opponent.die(character)
     
-    return render_template('attack.html',character=character,combat_results=combat_results)
+    weapon_id = character.body['weapon']
+    weapon = Weapon.query.get(weapon_id)
+
+    return render_template('attack.html',character=character,combat_results=combat_results,weapon=weapon)
 
 @app.route('/equip/<int:item_id>')
 @flask_login.login_required

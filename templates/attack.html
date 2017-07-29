@@ -24,7 +24,7 @@ $( document ).ready(function() {
 		</div>
 		<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 			<a href="{{ url_for('attack') }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-					Attack
+					Attack with {{ weapon.name | default('Bare Hands') }}
 				</button></a></div>
 				<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 					<a href="{{ url_for('run_away') }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">

@@ -118,10 +118,11 @@ class Armor(Item):
     def is_armor():
         return True
 
-    def __init__(self, name='',ac=0,slot='chest'):
+    def __init__(self, name='',ac=0,slot='chest',value=0):
         self.name = name
         self.ac = ac
         self.slot = slot
+        self.value = value
 
     def __repr__(self):
         return '<Armor {}#{}>'.format(self.name, self.id)

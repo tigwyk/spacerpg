@@ -260,7 +260,7 @@ def equip(item_id):
         flash('You are not carrying that item and therefore cannot equip it.', 'error')
         return redirect(url_for('inventory'))
 
-    if character.wearing[item.slot] is not None:
+    if character.body[item.slot] is not None:
         flash('That equipment slot is occupied already.','error')
         return redirect(url_for('inventory'))
 

@@ -84,9 +84,13 @@ class Item(db.Model):
     value = db.Column(db.Integer)
     slot = db.Column(db.String(32))
 
-    def __init__(self, name='',type='',description='',subtitle='',value=0):
+    __mapper_args__ = {
+            'polymorphic_identity':'item',
+            'polymorphic_on':type
+            }
+    
+    def __init__(self, name='',description='',subtitle='',value=0):
         self.name = name
-        self.type = type
         self.description = description
         self.subtitle = subtitle
         self.value = value
@@ -97,6 +101,10 @@ class Item(db.Model):
 class Weapon(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'),primary_key=True)
     damage_dice = db.Column(db.String(32))
+
+    __mapper_args__ = {
+            'polymorphic_identity':'weapon',
+            }
 
     @property
     def is_weapon():
@@ -114,6 +122,10 @@ class Weapon(Item):
 class Armor(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True)
     ac = db.Column(db.Integer)
+
+    __mapper_args__ = {
+            'polymorphic_identity':'armor',
+            }
 
     @property
     def is_armor():

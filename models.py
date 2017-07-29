@@ -102,10 +102,11 @@ class Weapon(Item):
     def is_weapon():
         return True
 
-    def __init__(self, name='',damage_dice=''):
+    def __init__(self, name='',damage_dice='',value=0):
         self.name = name
         self.damage_dice = damage_dice
         self.slot = 'weapon'
+        self.value = value
 
     def __repr__(self):
         return '<Weapon {}#{}>'.format(self.name, self.id)

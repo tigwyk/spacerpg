@@ -267,6 +267,7 @@ def equip(item_id):
     character.body[item.slot] = item.id
     db.session.add(character)
     db.session.commit()
+    flash('You equipped {}.'.format(item.name))
     return redirect(url_for('inventory'))
 
 @app.route('/run_away')

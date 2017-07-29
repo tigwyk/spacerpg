@@ -227,6 +227,8 @@ class Living(db.Model):
 
         item_slot = item.slot
         self.body[item_slot] = item.id
+        db.session.add(self)
+        db.session.commit()
         return True
 
 class NPC(Living):

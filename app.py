@@ -121,6 +121,7 @@ def character_profile():
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)
                 db.session.commit()
+                generate_starter_equipment(character)
                 flash('Character created! Welcome to Deimos 2147!','error')
                 return redirect(url_for('character_profile'))
         else:
@@ -293,4 +294,23 @@ def unauthorized_handler():
     return redirect(url_for('login'))
 
 #Game Logic Stuff
+
+def generate_starter_equipment(character):
+    chest = Armor(name='Cheap Combat Armor',slot='chest',ac=10,value=100)
+    head = Armor(name='Cheap Combat Helmet',slot='head',ac=10,value=100)
+    hands = Armor(name='Cheap Combat Gloves',slot='hands',ac=10,value=100)
+    legs = Armor(name='Cheap Combat Legplates',slot='legs',ac=10,value=100)
+    feet = Armor(name='Cheap Combat Boots',slot='feet',ac=10,value=100)
+    weapon = Weapon(name='Cheap Martian M16 Knockoff',slot='weapon',damage_dice='2d4',value=100)
+    db.session.add(chest)
+    db.session.add(head)
+    db.session.add(hands)
+    db.session.add(legs)
+    db.session.add(feet)
+    db.session.add(weapon)
+    db.session.commit()
+    character.inventory.extend([chest,head,legs,feet,weapon,hands])
+    db.session.add(character)
+    db.session.commit()
+
 

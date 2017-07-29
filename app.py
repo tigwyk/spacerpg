@@ -136,7 +136,8 @@ def inventory():
         return redirect(url_for('character_profile'))    
     else:
         inv=char.inventory
-        return render_template('inventory.html',inventory=inv)
+        worn_items = char.body
+        return render_template('inventory.html',inventory=inv,worn_items=worn_items)
 
 
 @app.route('/move/<int:destination_id>')

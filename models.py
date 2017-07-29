@@ -227,7 +227,7 @@ class Living(db.Model):
 
         item_slot = item.slot
         updated_body = self.body.update({item_slot : item.id})
-        self.body = updated.body
+        self.body = updated_body
         db.session.add(self)
         db.session.commit()
         db.session.close()

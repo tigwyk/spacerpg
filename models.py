@@ -160,6 +160,7 @@ class Room(db.Model):
             secondaryjoin=id==room_exits_table.c.room2_id,
             backref='linked_rooms'
             )
+    type = db.Column(db.String(32))
     room_type = db.Column(db.String(64))
 
     def __init__(self, name='',description='',room_type='indoors',players=[],exits=[]):

@@ -25,6 +25,10 @@ class AdminModelView(CustomModelView):
 class RoomModelView(CustomModelView):
     column_editable_list = ['name','description','type']
 
+class ItemModelView(CustomModelView):
+    column_editable_list = ['name','description','subtitle','value']
+    form_excluded_columns = ['type']
+
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(128))

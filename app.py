@@ -16,14 +16,14 @@ db = SQLAlchemy(app)
 
 admin = Admin(app, name='Deimos 2147')
 
-from models import News,User,Character,Item,NPC,Room,AdminModelView,CustomModelView,Weapon,Armor,RoomModelView
+from models import News,User,Character,Item,NPC,Room,AdminModelView,CustomModelView,Weapon,Armor,RoomModelView,ItemModelView
 from login import login_manager
 from forms import RegistrationForm,LoginForm,CharacterCreationForm
 
 
 admin.add_view(CustomModelView(User, db.session))
 admin.add_view(AdminModelView(Character, db.session))
-admin.add_view(AdminModelView(Item, db.session))
+admin.add_view(ItemModelView(Item, db.session))
 admin.add_view(RoomModelView(Room, db.session))
 admin.add_view(AdminModelView(NPC, db.session))
 admin.add_view(AdminModelView(Armor, db.session))

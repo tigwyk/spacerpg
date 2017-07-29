@@ -226,10 +226,7 @@ class Living(db.Model):
         if not item:
             return False
 
-        item_slot = item.slot
-        current_body_array = self.body
-        current_body_array.update({item_slot : item.id})
-        self.body = current_body_array
+        self.body[item.slot] = item.id
         db.session.add(self)
         db.session.commit()
         return True

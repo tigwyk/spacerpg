@@ -160,17 +160,17 @@ class Room(db.Model):
             secondaryjoin=id==room_exits_table.c.room2_id,
             backref='linked_rooms'
             )
-    type = db.Column(db.String(64))
+    room_type = db.Column(db.String(64))
 
-    def __init__(self, name='',description='',type='',players=[],exits=[]):
+    def __init__(self, name='',description='',room_type='indoors',players=[],exits=[]):
         self.name = name
         self.description = description
-        self.type = type
+        self.room_type = room_type
         self.players = players
         self.exits = exits
 
     def __repr__(self):
-        return '<Room {}#{}>'.format(self.name, self.id)
+        return '<Room {} {}#{}>'.format(self.name, self.room_type, self.id)
 
 inventory_table = db.Table('inventory_table', 
         db.Column('living_id', db.Integer, db.ForeignKey('living.id'),nullable=False),
@@ -270,6 +270,7 @@ class Character(Living):
     title = db.Column(db.String(128))
     opponent_id = db.Column(db.Integer, db.ForeignKey('npc.id'))
     opponent = db.relationship('NPC',backref='opponent',foreign_keys=[opponent_id])
+    inebriation = db.relationship(db.Integer)
 
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)

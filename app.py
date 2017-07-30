@@ -47,7 +47,7 @@ def index():
         return redirect(url_for('attack'))
     current_loc = character.location
     nearest_exits = current_loc.exits + current_loc.linked_rooms
-
+    character.update_character()
     return render_template('index.html', character=character,nearest_exits=nearest_exits)
 
 @app.route('/register', methods=['POST','GET'])
@@ -110,6 +110,7 @@ def character_profile():
         if char is None:
             return render_template('character_profile.html',form=form)    
         else:
+            char.update_character()
             return render_template('character_profile.html',character=char)
     elif request.method == 'POST':
         if form.validate_on_submit():
@@ -141,6 +142,7 @@ def inventory():
     else:
         inv=char.inventory
         worn_items = char.body
+        char.update_character()
         return render_template('inventory.html',inventory=inv,worn_items=worn_items)
 
 
@@ -249,6 +251,7 @@ def attack():
     else:
         weapon = None
 
+    character.update_character()
     return render_template('attack.html',character=character,combat_results=combat_results,weapon=weapon)
 
 @app.route('/equip/<int:item_id>')
@@ -310,7 +313,7 @@ def drink_alcohol():
     if character.inebriation + INEBRIATION_PER_DRINK > 100:
         character.inebriation = 100
         db.session.add(character)
-        db.commit()
+        db.session.commit()
     else:
         character.inebriation += INEBRIATION_PER_DRINK
         db.session.add(character)

@@ -23,7 +23,8 @@ class AdminModelView(CustomModelView):
     column_editable_list = ['name']
 
 class RoomModelView(CustomModelView):
-    column_editable_list = ['name','description','type']
+    column_editable_list = ['name','description','room_type']
+    form_excluded_columns = ['type']
 
 class ItemModelView(CustomModelView):
     column_editable_list = ['name','description','subtitle','value']

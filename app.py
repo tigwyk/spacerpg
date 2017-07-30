@@ -314,7 +314,7 @@ def drink_alcohol():
     else:
         character.inebriation += INEBRIATION_PER_DRINK
         db.session.add(character)
-        db.commit()
+        db.session.commit()
 
     flash('You knock back a drink and feel your health improving already!', 'error')
     return redirect(url_for('index'))

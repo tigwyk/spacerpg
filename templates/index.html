@@ -13,8 +13,10 @@ $( document ).ready(function() {
 		{{ character.name }}
 	</div>
 	<div class="mdl-cell mdl-cell--3-col">
-		<p>Your HP: {{ character.hps }} / {{ character.max_hps }}</p>
-		<p>Inebriated: {{ character.inebriation }}%</p>
+		Your HP: {{ character.hps }} / {{ character.max_hps }}
+	</div>
+	<div class="mdl-cell mdl-cell--1-col">
+		<i class="material-icons">local_bar</i>: {{ character.inebriation }}%
 	</div>
 
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
@@ -27,7 +29,7 @@ $( document ).ready(function() {
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		<a href="{{ url_for('drink_alcohol') }}">
 		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-			<i class="material-icons">add_circle</i> Drink Beer</button></a>
+			<i class="material-icons">local_hospital</i> Drink Beer</button></a>
 	</div>
 	{% endif %}
 	{% for exit in nearest_exits %}

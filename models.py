@@ -7,6 +7,8 @@ from flask import jsonify,redirect,url_for
 from flask_admin.contrib.sqla import ModelView
 import random
 
+import datetime
+
 class CustomModelView(ModelView):
     create_modal = True
     edit_modal = True
@@ -273,11 +275,17 @@ class Character(Living):
     opponent_id = db.Column(db.Integer, db.ForeignKey('npc.id'))
     opponent = db.relationship('NPC',backref='opponent',foreign_keys=[opponent_id])
     inebriation = db.Column(db.Integer, default=0)
+    updated_at = db.Column(db.DateTime,default=datetime.datetime.now())
+    created_at = db.Column(db.DateTime,default=datetime.datetime.now())
+    
 
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)
 
     def update_character(self):
+        now = datetime.datetime.now()
+        tdelta = now - self.updated_at
+        time_to_account_for = tdelta.total_seconds()
         healing_rate = 1
         if self.inebriation == 0:
            return
@@ -287,9 +295,10 @@ class Character(Living):
             healing_rate += 1
         
         if self.hps < self.max_hps:
-            self.hps += healing_rate
+            self.hps += healing_rate*(time_to_account_for/30)
         
-        self.inebriation -= 1
+        self.inebriation -= 1*(time_to_account_for/60)
+        self.updated_at = datetime.datetime.now()
         db.session.add(self)
         db.session.commit()
 

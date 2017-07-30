@@ -6,6 +6,8 @@
 <title>Deimos 2147</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-blue.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.jrumble.1.3.min.js') }}"></script>
 <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='style.css') }}">
 <script type=text/javascript>
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
@@ -48,7 +50,5 @@
 	</footer>
 	</div>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.jrumble.1.3.js') }}"></script>
-</body>
+	</body>
 </html>

@@ -1,15 +1,5 @@
 {% extends "layout.html" %}
 {% block body %}
-<script type=text/javascript>
-$( document ).ready(function() {
-	$("#console").text("{{ character.location.description }}");
-	$(":button").jrumble();
-	if({{character.inebriated}}==100){
-		$(":button").trigger('startRumble')
-	}
-});
-
-</script>
 <div class="mdl-grid">
 	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
 		Location: {{ character.location.name }}
@@ -43,4 +33,14 @@ $( document ).ready(function() {
 	</div>
 	{% endfor %}
 </div>
+<script type=text/javascript>
+$( document ).ready(function() {
+	$("#console").text("{{ character.location.description }}");
+	$(":button").jrumble();
+	if({{character.inebriated}}==100){
+		$(":button").trigger('startRumble')
+	}
+});
+
+</script>
 {% endblock%}

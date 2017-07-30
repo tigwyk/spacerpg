@@ -309,8 +309,12 @@ def drink_alcohol():
 
     if character.inebriation + INEBRIATION_PER_DRINK > 100:
         character.inebriation = 100
+        db.session.add(character)
+        db.commit()
     else:
         character.inebriation += INEBRIATION_PER_DRINK
+        db.session.add(character)
+        db.commit()
 
     flash('You knock back a drink and feel your health improving already!', 'error')
     return redirect(url_for('index'))

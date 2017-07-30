@@ -290,6 +290,8 @@ class Character(Living):
             self.hps += healing_rate
         
         self.inebriation -= 1
+        db.session.add(self)
+        db.session.commit()
 
 
 def roll_for_body_part():

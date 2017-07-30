@@ -36,7 +36,11 @@
 <script type=text/javascript>
 $( document ).ready(function() {
 	$("#console").text("{{ character.location.description }}");
-	$(":button").jrumble();
+	$(":button").jrumble({
+		x: 0,
+		y: 0,
+		rotation: 2
+	});
 	if({{character.inebriation}}==100){
 		$(":button").trigger('startRumble')
 	}

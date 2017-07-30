@@ -29,11 +29,14 @@ admin.add_view(AdminModelView(NPC, db.session))
 admin.add_view(AdminModelView(Armor, db.session))
 admin.add_view(AdminModelView(Weapon, db.session))
 
+INEBRIATION_PER_DRINK = 3
+
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http','https') and ref_url.netloc == test_url.netloc
 
+#Display the room description, image, etc
 @app.route('/')
 @flask_login.login_required
 def index():
@@ -185,6 +188,7 @@ def move_character(destination_id,char=None):
                 db.session.add(char)
                 db.session.commit()
                 flash('Successfully moved to {}.'.format(char.location.name),'error')
+            char.update_character()
         else:
             flash('Failed to move. Destination not close enough.','error')
     else:
@@ -288,6 +292,28 @@ def equip(item_id):
 def run_away():
     return redirect(url_for('index'))
 
+@app.route('/drink')
+@flask_login.login_required
+def drink_alcohol():
+    character = flask_login.current_user.character
+    if character is None:
+        flash("You can't drink without a body.",'error')
+        return redirect(url_for('character_profile'))
+
+    if character.location.room_type != 'bar':
+        flash('You are not in a drinking establishment.','error')
+        return redirect(url_for('index'))
+
+    if character.inebriation >= 100:
+        flash('You cannot consume any more booze. You are very drunk.', 'error')
+
+    if character.inebriation + INEBRIATION_PER_DRINK > 100:
+        character.inebriation = 100
+    else:
+        character.inebriation += INEBRIATION_PER_DRINK
+
+    flash('You knock back a drink and feel your health improving already!', 'error')
+    return redirect(url_for('index'))
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

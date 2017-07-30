@@ -276,6 +276,21 @@ class Character(Living):
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)
 
+    def update_character(self):
+        healing_rate = 1
+        if self.inebriation == 0:
+           return
+        if self.inebriation > 0:
+            healing_rate += 1
+        if self.inebriation > 30:
+            healing_rate += 1
+        
+        if self.hps < self.max_hps:
+            self.hps += healing_rate
+        
+        self.inebriation -= 1
+
+
 def roll_for_body_part():
     body_parts = ['head','chest','hands','legs','feet']
     bias_list = [0.10,0.50,0.05,0.30,0.05]

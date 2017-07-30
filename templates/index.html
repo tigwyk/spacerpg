@@ -37,7 +37,7 @@
 $( document ).ready(function() {
 	$("#console").text("{{ character.location.description }}");
 	$(":button").jrumble();
-	if({{character.inebriated}}==100){
+	if({{character.inebriation}}==100){
 		$(":button").trigger('startRumble')
 	}
 });

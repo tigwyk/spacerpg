@@ -271,7 +271,7 @@ class Character(Living):
     title = db.Column(db.String(128))
     opponent_id = db.Column(db.Integer, db.ForeignKey('npc.id'))
     opponent = db.relationship('NPC',backref='opponent',foreign_keys=[opponent_id])
-    inebriation = db.Column(db.Integer)
+    inebriation = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return '<Character {}#{}>'.format(self.name, self.id)

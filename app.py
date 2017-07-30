@@ -120,7 +120,7 @@ def character_profile():
             else:
                 character = Character(name=form.name.data)
                 character.title = 'the newly landed'
-                character.location = Room.query.first()
+                character.location = Room.query.filter_by(name='The Red Death').first()
                 db.session.add(character)
                 flask_login.current_user.character = character
                 db.session.add(flask_login.current_user)

@@ -287,8 +287,6 @@ class Character(Living):
         tdelta = now - self.updated_at
         time_to_account_for = tdelta.total_seconds()
         healing_rate = 1
-        if self.inebriation <= 0:
-           return
         if self.inebriation > 0:
             healing_rate += 1
         if self.inebriation > 30:
@@ -300,8 +298,10 @@ class Character(Living):
             else:
                 self.hps += healing_rate*(time_to_account_for/30)
         
-
-        self.inebriation -= 1*(time_to_account_for/60)
+        boozed_amount = time_to_acount_for/60
+        if self.inebriation > 0:
+            if self.inebriation - (1*boozed_amount) > 0:
+                self.inebriation -= 1*boozed_amount
         self.updated_at = datetime.datetime.now()
         db.session.add(self)
         db.session.commit()

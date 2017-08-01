@@ -298,7 +298,7 @@ class Character(Living):
             else:
                 self.hps += healing_rate*(time_to_account_for/30)
         
-        boozed_amount = time_to_acount_for/60
+        boozed_amount = time_to_account_for/60
         if self.inebriation > 0:
             if self.inebriation - (1*boozed_amount) > 0:
                 self.inebriation -= 1*boozed_amount

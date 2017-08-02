@@ -313,8 +313,7 @@ class Character(Living):
             self.state = 'dead'
             self.character = None
             self.opponent = None
-            return redirect(url_for('character_profile'))
-
+            
 
 def roll_for_body_part():
     body_parts = ['head','chest','hands','legs','feet']

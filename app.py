@@ -247,6 +247,7 @@ def attack():
     if character.hps < 1:
         flash('You have died. Your soul manages to escape the ravaged corpse.','error')
         character.die()
+        return redirect(url_for('character_profile'))
 
     weapon_id = character.body['weapon']
     if weapon_id:

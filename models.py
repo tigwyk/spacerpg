@@ -312,7 +312,6 @@ class Character(Living):
         if self.state == 'alive':
             self.state = 'dead'
             self.character = None
-            flash('You have died. Your soul manages to escape the ravaged corpse.','error')
             return redirect(url_for('character_profile'))
 
 

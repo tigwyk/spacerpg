@@ -245,6 +245,7 @@ def attack():
     if opponent.hps < 1:
         combat_results += " "+opponent.die(character)
     if character.hps < 1:
+        flash('You have died. Your soul manages to escape the ravaged corpse.','error')
         character.die()
 
     weapon_id = character.body['weapon']

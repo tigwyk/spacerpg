@@ -244,7 +244,9 @@ def attack():
 
     if opponent.hps < 1:
         combat_results += " "+opponent.die(character)
-    
+    if character.hps < 1:
+        character.die()
+
     weapon_id = character.body['weapon']
     if weapon_id:
         weapon = Weapon.query.get(weapon_id)

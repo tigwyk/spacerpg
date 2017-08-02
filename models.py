@@ -311,7 +311,6 @@ class Character(Living):
     def die(self):
         if self.state == 'alive':
             self.state = 'dead'
-            self.character = None
             self.opponent = None
             
 

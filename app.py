@@ -247,6 +247,10 @@ def attack():
     if character.hps < 1:
         flash('You have died. Your soul manages to escape the ravaged corpse.','error')
         character.die()
+        current_user.character = None
+        db.session.add(character)
+        db.session.add(current_user)
+        db.session.commit()
         return redirect(url_for('character_profile'))
 
     weapon_id = character.body['weapon']

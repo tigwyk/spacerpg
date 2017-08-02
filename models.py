@@ -312,6 +312,7 @@ class Character(Living):
         if self.state == 'alive':
             self.state = 'dead'
             self.character = None
+            self.opponent = None
             return redirect(url_for('character_profile'))
 
 

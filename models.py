@@ -191,6 +191,7 @@ class Living(db.Model):
     race = db.Column(db.String(64))
     hps = db.Column(db.Integer)
     max_hps = db.Column(db.Integer)
+    state = db.Column(db.String(32))
 
     def __init__(self, name='',race='human'):
         str_max = random.uniform(9,11)
@@ -203,6 +204,7 @@ class Living(db.Model):
         self.max_hps = self.attributes['strength']*3
         self.hps = self.max_hps
         self.body = {'head':None,'chest':None, 'hands':None,'legs':None,'feet':None,'weapon':None}
+        self.state = 'alive'
 
 
     def dexterity_roll(self):
@@ -305,6 +307,13 @@ class Character(Living):
         self.updated_at = datetime.datetime.now()
         db.session.add(self)
         db.session.commit()
+
+    def die(self):
+        if self.state == 'alive':
+            self.state = 'dead'
+            self.character = None
+            flash('You have died. Your soul manages to escape the ravaged corpse.','error')
+            return redirect(url_for('character_profile'))
 
 
 def roll_for_body_part():

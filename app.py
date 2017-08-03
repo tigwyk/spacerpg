@@ -249,7 +249,7 @@ def attack():
         character.die()
         flask_login.current_user.character = None
         db.session.add(character)
-        db.session.add(current_user)
+        db.session.add(flask_login.current_user)
         db.session.commit()
         return redirect(url_for('character_profile'))
 

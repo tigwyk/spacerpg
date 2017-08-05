@@ -258,6 +258,7 @@ class Living(db.Model):
 class NPC(Living):
     __tablename__ = 'npc'
     id = db.Column(db.Integer, db.ForeignKey('living.id'),primary_key=True)
+    description = db.Column(db.String(128))
 
     def __repr__(self):
         return '<NPC {}#{}>'.format(self.name, self.id)

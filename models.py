@@ -204,7 +204,7 @@ class Living(db.Model):
         self.max_hps = self.attributes['strength']*3
         self.hps = self.max_hps
         self.body = {'head':None,'chest':None, 'hands':None,'legs':None,'feet':None,'weapon':None}
-        self.state = 'alive'
+        self.state = 'idle'
 
 
     def dexterity_roll(self):

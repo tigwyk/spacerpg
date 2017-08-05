@@ -210,7 +210,13 @@ def attack():
 
     if opponent is None:
         flash('Your opponent is dead so you move on.', 'error')
+        character.state = 'idle'
         return redirect(url_for('index'))
+   
+    if character.state != 'combat':
+        character.state = 'combat'
+        combat_results = opponent.description
+        return render_template('attack.html',character=character,combat_results=combat_results,weapon=None)
 
     player_attack_result = character.attack(character.opponent)
     npc_attack_result = opponent.attack(character)

@@ -208,6 +208,12 @@ def attack():
 
     opponent = character.opponent
 
+    weapon_id = character.body['weapon']
+    if weapon_id:
+        weapon = Weapon.query.get(weapon_id)
+    else:
+        weapon = None
+
     if opponent is None:
         flash('Your opponent is dead so you move on.', 'error')
         character.state = 'idle'
@@ -216,7 +222,7 @@ def attack():
     if character.state != 'combat':
         character.state = 'combat'
         combat_results = opponent.description
-        return render_template('attack.html',character=character,combat_results=combat_results,weapon=None)
+        return render_template('attack.html',character=character,combat_results=combat_results,weapon=weapon)
 
     player_attack_result = character.attack(character.opponent)
     npc_attack_result = opponent.attack(character)
@@ -258,12 +264,6 @@ def attack():
         db.session.add(flask_login.current_user)
         db.session.commit()
         return redirect(url_for('character_profile'))
-
-    weapon_id = character.body['weapon']
-    if weapon_id:
-        weapon = Weapon.query.get(weapon_id)
-    else:
-        weapon = None
 
     character.update_character()
     return render_template('attack.html',character=character,combat_results=combat_results,weapon=weapon)

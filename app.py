@@ -166,6 +166,7 @@ def move_character(destination_id,char=None):
 
     #for demo purposes
     monster = NPC(name="Testy")
+    monster.description = "The biggest and meanest test monster, Testy stands 7 feet tall and 400 pounds. You can probably imagine the rest."
     db.session.add(monster)
     db.session.commit()
 

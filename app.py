@@ -222,6 +222,8 @@ def attack():
     if character.state != 'combat':
         character.state = 'combat'
         combat_results = opponent.description
+        db.session.add(character)
+        db.session.commit()
         return render_template('attack.html',character=character,combat_results=combat_results,weapon=weapon)
 
     player_attack_result = character.attack(character.opponent)

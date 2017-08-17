@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify, Blueprint
 import flask_login
 from urllib.parse import urlparse, urljoin
 from flask_sqlalchemy import SQLAlchemy

@@ -345,9 +345,9 @@ class Character(Living):
                 'state':self.state,
                 'race':self.race,
                 'credits':self.credits,
-                'body':self.body,
-                'attributes':self.attributes,
-                'inventory':self.inventory
+                'body':dict(self.body),
+                'attributes':dict(self.attributes),
+                'inventory':dict(self.inventory)
                 })
 
 def roll_for_body_part():

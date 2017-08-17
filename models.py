@@ -337,8 +337,8 @@ class Character(Living):
         return dict({
                 'name':self.name,
                 'title':self.title,
-                'location':self.location,
-                'opponent':self.opponent,
+                'location':self.location.as_dict(),
+                'opponent':self.opponent.as_dict(),
                 'inebriation':self.inebriation,
                 'hps':self.hps,
                 'max_hps':self.max_hps,

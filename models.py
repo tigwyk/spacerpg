@@ -106,7 +106,7 @@ class Item(db.Model):
         return '<Item {} {} #{}>'.format(self.name, self.type, self.id)
 
     def as_dict(self):
-               return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class Weapon(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'),primary_key=True)
@@ -129,6 +129,9 @@ class Weapon(Item):
     def __repr__(self):
         return '<Weapon {}#{}>'.format(self.name, self.id)
 
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class Armor(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'), primary_key=True)
     ac = db.Column(db.Integer)
@@ -149,6 +152,10 @@ class Armor(Item):
 
     def __repr__(self):
         return '<Armor {}#{}>'.format(self.name, self.id)
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 
 room_exits_table = db.Table('room_exits_table',
         db.Column('room1_id',db.Integer,db.ForeignKey('room.id'),primary_key=True),
@@ -178,6 +185,9 @@ class Room(db.Model):
 
     def __repr__(self):
         return '<Room {} {}#{}>'.format(self.name, self.room_type, self.id)
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 inventory_table = db.Table('inventory_table', 
         db.Column('living_id', db.Integer, db.ForeignKey('living.id'),nullable=False),
@@ -259,7 +269,7 @@ class Living(db.Model):
         return True
 
     def as_dict(self):
-               return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class NPC(Living):
     __tablename__ = 'npc'
@@ -275,6 +285,8 @@ class NPC(Living):
         db.session.commit()
         return msg
 
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class Character(Living):
     id = db.Column(db.Integer, db.ForeignKey('living.id'), primary_key=True)
@@ -320,6 +332,8 @@ class Character(Living):
             self.state = 'dead'
             self.opponent = None
             
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 def roll_for_body_part():
     body_parts = ['head','chest','hands','legs','feet']

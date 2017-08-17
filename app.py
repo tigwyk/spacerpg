@@ -11,7 +11,6 @@ app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.register_blueprint(api_bp, url_prefix='/api/v1')
 
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
@@ -348,6 +347,8 @@ api_bp = Blueprint('api', __name__, template_folder='templates')
 def api_index_page():
     result = {"msg":"This is the index of the api.","status":200}
     return jsonify(result)
+
+app.register_blueprint(api_bp, url_prefix='/api/v1')
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

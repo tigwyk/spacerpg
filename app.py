@@ -346,7 +346,7 @@ api_bp = Blueprint('api', __name__, template_folder='templates')
 
 @api_bp.route("/")
 def api_index_page():
-    result = dict("msg":"This is the index of the api.","status":200)
+    result = dict({"msg":"This is the index of the api.","status":200})
     return jsonify(result)
 
 @flask_login.login_required

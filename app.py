@@ -11,6 +11,8 @@ app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.register_blueprint(api_bp, url_prefix='/api/v1')
+
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 

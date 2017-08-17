@@ -333,7 +333,22 @@ class Character(Living):
             self.opponent = None
             
     def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return dict({
+                'name':self.name,
+                'title':self.title,
+                'location':self.location,
+                'opponent':self.opponent,
+                'inebriation':self.inebriation,
+                'hps':self.hps,
+                'max_hps':self.max_hps,
+                'creation_date':self.created_at,
+                'state':self.state,
+                'race':self.race,
+                'credits':self.credits,
+                'body':self.body,
+                'attributes':self.attributes,
+                'inventory':self.inventory
+                })
 
 def roll_for_body_part():
     body_parts = ['head','chest','hands','legs','feet']

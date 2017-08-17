@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify
 import flask_login
 from urllib.parse import urlparse, urljoin
 from flask_sqlalchemy import SQLAlchemy
@@ -339,6 +339,13 @@ def drink_alcohol():
 
     flash('You knock back a drink and feel your health improving already!', 'error')
     return redirect(url_for('index'))
+
+api_bp = Blueprint('api', __name__, template_folder='templates')
+
+@api_bp.route("/")
+def api_index_page():
+    result = {"msg":"This is the index of the api.","status":200}
+    return jsonify(result)
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

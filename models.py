@@ -334,11 +334,16 @@ class Character(Living):
             
     def as_dict(self):
         json_inventory = [item.as_dict() for item in self.inventory]
+        if self.opponent:
+            opponent = self.opponent.as_dict()
+        else:
+            opponent = None
+
         return dict({
                 'name':self.name,
                 'title':self.title,
                 'location':self.location.as_dict(),
-                'opponent':self.opponent.as_dict(),
+                'opponent':opponent,
                 'inebriation':self.inebriation,
                 'hps':self.hps,
                 'max_hps':self.max_hps,

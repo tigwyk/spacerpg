@@ -105,6 +105,9 @@ class Item(db.Model):
     def __repr__(self):
         return '<Item {} {} #{}>'.format(self.name, self.type, self.id)
 
+    def as_dict(self):
+               return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class Weapon(Item):
     id = db.Column(db.Integer, db.ForeignKey('item.id'),primary_key=True)
     damage_dice = db.Column(db.String(32))
@@ -254,6 +257,9 @@ class Living(db.Model):
         db.session.add(self)
         db.session.commit()
         return True
+
+    def as_dict(self):
+               return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class NPC(Living):
     __tablename__ = 'npc'

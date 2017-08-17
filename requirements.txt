@@ -1,6 +1,7 @@
 Flask==0.12.2
 Flask-Admin==1.5.0
 Flask-Bcrypt==0.7.1
+Flask-Cors==3.0.3
 Flask-Login==0.4.0
 Flask-Migrate==1.8.0
 Flask-SQLAlchemy==2.2

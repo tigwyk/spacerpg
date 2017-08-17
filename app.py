@@ -6,6 +6,7 @@ from urllib.parse import urlparse, urljoin
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -16,6 +17,8 @@ bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
 admin = Admin(app, name='Deimos 2147')
+
+CORS(app)
 
 from models import News,User,Character,Item,NPC,Room,AdminModelView,CustomModelView,Weapon,Armor,RoomModelView,ItemModelView
 from login import login_manager

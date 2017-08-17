@@ -333,6 +333,7 @@ class Character(Living):
             self.opponent = None
             
     def as_dict(self):
+        json_inventory = [item.to_dict() for item in self.inventory]
         return dict({
                 'name':self.name,
                 'title':self.title,
@@ -347,7 +348,7 @@ class Character(Living):
                 'credits':self.credits,
                 'body':dict(self.body),
                 'attributes':dict(self.attributes),
-                'inventory':list(self.inventory)
+                'inventory':json_inventory
                 })
 
 def roll_for_body_part():

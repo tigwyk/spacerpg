@@ -343,10 +343,16 @@ def drink_alcohol():
 
 api_bp = Blueprint('api', __name__, template_folder='templates')
 
+
 @api_bp.route("/")
 def api_index_page():
     result = {"msg":"This is the index of the api.","status":200}
     return jsonify(result)
+
+@flask_login.login_required
+@api_bp.route("/character")
+def api_character_page():
+    return jsonify(flask_login.current_user.character)
 
 app.register_blueprint(api_bp, url_prefix='/api/v1')
 

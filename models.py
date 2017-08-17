@@ -333,7 +333,7 @@ class Character(Living):
             self.opponent = None
             
     def as_dict(self):
-        json_inventory = [item.to_dict() for item in self.inventory]
+        json_inventory = [item.as_dict() for item in self.inventory]
         return dict({
                 'name':self.name,
                 'title':self.title,

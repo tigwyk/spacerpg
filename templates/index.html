@@ -1,50 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="mdl-grid">
-	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		Location: {{ character.location.name }}
-	</div>
-	<div class="mdl-cell mdl-cell--12-col">
-		{{ character.name }}
-	</div>
-	<div class="mdl-cell mdl-cell--3-col">
-		Your HP: {{ character.hps }} / {{ character.max_hps }}
-	</div>
-	<div class="mdl-cell mdl-cell--3-col">
-		Boozed: {{ character.inebriation }}%
-	</div>
-
-	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		<img class="img-responsive" src="http://via.placeholder.com/675x150?text={{ character.location.name }}"/>
-	</div>
-	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		<p id="console">Not ready yet.</p>
-	</div>
-	{% if character.location.room_type == 'bar' %}
-	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		<a href="{{ url_for('drink_alcohol') }}">
-		<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-			<i class="material-icons">local_hospital</i> Drink Beer</button></a>
-	</div>
-	{% endif %}
-	{% for exit in nearest_exits %}
-	<div class="mdl-cell mdl-cell--12-col mdl-cell--4-col-phone">
-		<a href="{{ url_for('move_character',destination_id=exit.id) }}"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"><i class="material-icons">exit_to_app</i> Travel: {{exit.name}}</button></a>
-	</div>
-	{% endfor %}
-</div>
-<script type=text/javascript>
-$( document ).ready(function() {
-	$("#console").text("{{ character.location.description }}");
-	$(":button").jrumble({
-		x: 0,
-		y: 0,
-		rotation: 2
-	});
-	if({{character.inebriation}}==100){
-		$(":button").trigger('startRumble')
-	}
-});
-
-</script>
+><noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root"></div>
+<script type="text/javascript" src="{{ url_for('/js/main.8ffd6f06.js') }}"></script>
 {% endblock%}

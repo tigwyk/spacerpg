@@ -40,6 +40,10 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http','https') and ref_url.netloc == test_url.netloc
 
+@app.route('/service-worker.js')
+def service_worker():
+    return url_for('static', filename='js/service-worker.js')
+
 #Display the room description, image, etc
 @app.route('/')
 @flask_login.login_required

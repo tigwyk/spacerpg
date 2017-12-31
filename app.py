@@ -52,7 +52,7 @@ def index():
     current_loc = character.location
     nearest_exits = current_loc.exits + current_loc.linked_rooms
     character.update_character()
-    return render_template('index.html', character=character,nearest_exits=nearest_exits)
+    return render_template('index.html', character=character.as_dict(),nearest_exits=nearest_exits)
 
 @app.route('/register', methods=['POST','GET'])
 def register():

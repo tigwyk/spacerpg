@@ -44,6 +44,8 @@ def is_safe_url(target):
 @app.route('/')
 @flask_login.login_required
 def index():
+    if flask_login.current_user is None:
+        return redirect(url_for('login'))
     character = flask_login.current_user.character
     if character is None:
         return redirect(url_for('character_profile'))

@@ -357,6 +357,8 @@ def api_index_page():
 @flask_login.login_required
 @api_bp.route("/character")
 def api_character_page():
+    if flask_login.current_user is None:
+        return redirect(url_for('login'))
     char = flask_login.current_user.character
     return jsonify(char.as_dict())
 

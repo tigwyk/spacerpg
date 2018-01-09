@@ -19,7 +19,7 @@ ul {
 	padding: 0.01em 16px;
 }
 
-.img-responsive {
+img {
 	max-width: 100%;
 	height: auto;
 	display: block;

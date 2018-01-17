@@ -339,7 +339,7 @@ def move_character(destination_id,char=None):
                     char.opponent = monster_pool[0]            
                     db.session.add(char)
                     db.session.commit()
-                    return jsonify({'msg': 'You have encountered {}! Prepare for combat!'.format(char.opponent.name),'type':'combat')
+                    return jsonify({'msg': 'You have encountered {}! Prepare for combat!'.format(char.opponent.name),'type':'combat'})
                 else:
                     char.location = destination
                     db.session.add(char)

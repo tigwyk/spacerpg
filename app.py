@@ -319,7 +319,7 @@ def move_character(destination_id,char=None):
     destination = Room.query.get(destination_id)
     current_loc = char.location
 
-    #monster_pool = []
+    monster_pool = []
 
     #for demo purposes
     #monster = NPC(name="Testy")

@@ -343,18 +343,20 @@ def move_character(destination_id,char=None):
                     char.opponent = monster_pool[0]            
                     db.session.add(char)
                     db.session.commit()
+                    char.update_character()
                     return jsonify({'msg': 'You have encountered {}! Prepare for combat!'.format(char.opponent.name),'type':'combat'})
                 else:
                     char.location = destination
                     db.session.add(char)
                     db.session.commit()
+                    char.update_character()
                     return jsonify({'msg':'Successfully moved to {}.'.format(char.location.name),'type':'success'})
             else:
                 char.location = destination
                 db.session.add(char)
                 db.session.commit()
+                char.update_character()
                 return jsonify({'msg':'Successfully moved to {}.'.format(char.location.name),'type':'success'})
-            char.update_character()
         else:
             return jsonify({'msg':'Failed to move. Destination not close enough.','type':'error'})
     else:

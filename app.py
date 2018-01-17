@@ -315,7 +315,7 @@ def api_room_lookup(room_id):
 
 @flask_login.login_required
 @api_bp.route("/room2/<int:room_id>")
-def api_room_lookup(room_id):
+def api_room_lookup2(room_id):
     room = Room.query.get(room_id)
     return jsonify(dict(room))
 

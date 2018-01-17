@@ -304,8 +304,6 @@ def api_index_page():
 @flask_login.login_required
 @api_bp.route("/character")
 def api_character_page():
-    if flask_login.current_user is None:
-        return redirect(url_for('login'))
     char = flask_login.current_user.character
     return jsonify(char.as_dict())
 
@@ -352,9 +350,9 @@ def move_character(destination_id,char=None):
                 return jsonify({'msg':'Successfully moved to {}.'.format(char.location.name),'type':'success'})
             char.update_character()
         else:
-        return jsonify({'msg':'Failed to move. Destination not close enough.','type':'error'})
+            return jsonify({'msg':'Failed to move. Destination not close enough.','type':'error'})
     else:
-    return jsonify({'msg':'Failed to move. Destination is current location.','type':'error'})
+        return jsonify({'msg':'Failed to move. Destination is current location.','type':'error'})
 
 app.register_blueprint(api_bp, url_prefix='/api/v1')
 

@@ -152,59 +152,6 @@ def inventory():
         return render_template('inventory.html',inventory=inv,worn_items=worn_items)
 
 
-@app.route('/move/<int:destination_id>')
-@flask_login.login_required
-def move_character(destination_id,char=None):
-    if char is None: 
-        if flask_login.current_user.character is None:
-            return redirect(url_for('character_profile'))
-        else:
-            char = flask_login.current_user.character
-
-
-    if char.opponent:
-        return redirect(url_for('attack'))
-
-    destination = Room.query.get(destination_id)
-    current_loc = char.location
-
-    monster_pool = []
-
-    #for demo purposes
-    monster = NPC(name="Testy")
-    monster.description = "The biggest and meanest test monster, Testy stands 7 feet tall and 400 pounds. You can probably imagine the rest."
-    db.session.add(monster)
-    db.session.commit()
-
-    monster_pool.append(monster)
-
-    if destination != current_loc:
-        nearest_exits = current_loc.exits + current_loc.linked_rooms
-        if destination in nearest_exits:
-            if monster_pool:
-                if monster_pool[0].dexterity_roll() > char.dexterity_roll():
-                    char.opponent = monster_pool[0]            
-                    db.session.add(char)
-                    db.session.commit()
-                    flash('You have encountered {}! Prepare for combat!'.format(char.opponent.name),'error')
-                else:
-                    char.location = destination
-                    db.session.add(char)
-                    db.session.commit()
-                    flash('Successfully moved to {}.'.format(char.location.name),'error')
-            else:
-                char.location = destination
-                db.session.add(char)
-                db.session.commit()
-                flash('Successfully moved to {}.'.format(char.location.name),'error')
-            char.update_character()
-        else:
-            flash('Failed to move. Destination not close enough.','error')
-    else:
-        flash('Failed to move. Destination is current location.','error')
-
-    return redirect(url_for('index'))
-
 @app.route('/attack')
 @flask_login.login_required
 def attack():
@@ -361,6 +308,53 @@ def api_character_page():
         return redirect(url_for('login'))
     char = flask_login.current_user.character
     return jsonify(char.as_dict())
+
+#@app.route('/move/<int:destination_id>')
+@flask_login.login_required
+@api_bp.route('/move/<int:destination_id>')
+def move_character(destination_id,char=None):
+    char = flask_login.current_user.character
+
+    #if char.opponent:
+    #    return redirect(url_for('attack'))
+
+    destination = Room.query.get(destination_id)
+    current_loc = char.location
+
+    #monster_pool = []
+
+    #for demo purposes
+    #monster = NPC(name="Testy")
+    #monster.description = "The biggest and meanest test monster, Testy stands 7 feet tall and 400 pounds. You can probably imagine the rest."
+    #db.session.add(monster)
+    #db.session.commit()
+
+    #monster_pool.append(monster)
+
+    if destination != current_loc:
+        nearest_exits = current_loc.exits + current_loc.linked_rooms
+        if destination in nearest_exits:
+            if monster_pool:
+                if monster_pool[0].dexterity_roll() > char.dexterity_roll():
+                    char.opponent = monster_pool[0]            
+                    db.session.add(char)
+                    db.session.commit()
+                    return jsonify({'msg': 'You have encountered {}! Prepare for combat!'.format(char.opponent.name),'type':'combat')
+                else:
+                    char.location = destination
+                    db.session.add(char)
+                    db.session.commit()
+                    return jsonify({'msg':'Successfully moved to {}.'.format(char.location.name),'type':'success'})
+            else:
+                char.location = destination
+                db.session.add(char)
+                db.session.commit()
+                return jsonify({'msg':'Successfully moved to {}.'.format(char.location.name),'type':'success'})
+            char.update_character()
+        else:
+        return jsonify({'msg':'Failed to move. Destination not close enough.','type':'error'})
+    else:
+    return jsonify({'msg':'Failed to move. Destination is current location.','type':'error'})
 
 app.register_blueprint(api_bp, url_prefix='/api/v1')
 

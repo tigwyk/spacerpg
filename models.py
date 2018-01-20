@@ -1,6 +1,7 @@
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.mutable import MutableDict
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.inspection import inspect
 from flask_login import UserMixin,current_user
 from app import app,db,bcrypt
 from flask import jsonify,redirect,url_for
@@ -187,7 +188,8 @@ class Room(db.Model):
         return '<Room {} {}#{}>'.format(self.name, self.room_type, self.id)
 
     def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        #return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
 
 inventory_table = db.Table('inventory_table', 
         db.Column('living_id', db.Integer, db.ForeignKey('living.id'),nullable=False),

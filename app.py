@@ -317,7 +317,10 @@ def api_room_lookup(room_id):
 @api_bp.route("/room2/<int:room_id>")
 def api_room_lookup2(room_id):
     room = Room.query.get(room_id)
-    return jsonify(room.__dict__)
+    jsoned_room = room.__dict__
+    jsoned_room = jsoned_room.pop('_sa_instance_state', None)
+    jsoned_room = jsonify(jsoned_room)
+    return jsoned_room
 
 #@app.route('/move/<int:destination_id>')
 @flask_login.login_required

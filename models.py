@@ -190,8 +190,8 @@ class Room(db.Model):
     def as_dict(self):
         #return {c.name: getattr(self, c.name) for c in self.__table__.columns}
         results = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
-        results.pop('players',None)
-        results.pop('exits',None)
+        results['players'] = [player.as_dict() for player in self.players]
+        results['exits'] = [room.as_dict() for room in self.exits]
         return results
 
 inventory_table = db.Table('inventory_table', 

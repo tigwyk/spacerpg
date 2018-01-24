@@ -191,6 +191,7 @@ class Room(db.Model):
         #return {c.name: getattr(self, c.name) for c in self.__table__.columns}
         results = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
         results.pop('players',None)
+        results.pop('exits',None)
         return results
 
 inventory_table = db.Table('inventory_table', 

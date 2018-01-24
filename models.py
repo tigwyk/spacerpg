@@ -189,9 +189,9 @@ class Room(db.Model):
 
     def as_dict(self):
         #return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-        results = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
-        results['players'] = [player.as_dict() for player in self.players]
-        results['exits'] = [room.as_dict() for room in self.exits]
+        #results = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+        results = self.__dict__
+        results.pop('_sa_instance_state', None)
         return results
 
 inventory_table = db.Table('inventory_table', 

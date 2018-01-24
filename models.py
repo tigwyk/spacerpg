@@ -189,7 +189,7 @@ class Room(db.Model):
 
     def as_dict(self):
         #return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-        return {c.name: getattr(self, c.name) for c in inspect(self).attrs.keys()}
+        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
 
 inventory_table = db.Table('inventory_table', 
         db.Column('living_id', db.Integer, db.ForeignKey('living.id'),nullable=False),

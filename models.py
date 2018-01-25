@@ -188,11 +188,11 @@ class Room(db.Model):
         return '<Room {} {}#{}>'.format(self.name, self.room_type, self.id)
 
     def as_dict(self):
-        #return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-        results = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+        #results = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
         #results = self.__dict__
         #results.pop('_sa_instance_state', None)
-        return results
+        #return results
 
 inventory_table = db.Table('inventory_table', 
         db.Column('living_id', db.Integer, db.ForeignKey('living.id'),nullable=False),

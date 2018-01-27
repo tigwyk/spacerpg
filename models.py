@@ -193,7 +193,7 @@ class Room(db.Model):
         #results = self.__dict__
         #results.pop('_sa_instance_state', None)
         exits = self.exits + self.linked_rooms
-        results['exits'] = [exit.id:exit.name for exit in exits]
+        results['exits'] = {exit.id:exit.name for exit in exits}
         return results
 
 inventory_table = db.Table('inventory_table', 

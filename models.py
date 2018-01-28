@@ -182,7 +182,7 @@ class Room(db.Model):
         if self.room_type == "bar":
             return 'bar.jpg'
         else:
-            return random.choice(['mars.jpg','mars1.jpg','mars2.jpg'])
+            return random.choice(['mars.jpg','mars1.jpg','mars2.jpg','mars3.jpg'])
 
     def __init__(self, name='',description='',room_type='indoors',players=[],exits=[]):
         self.name = name

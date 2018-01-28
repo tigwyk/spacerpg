@@ -201,6 +201,7 @@ class Room(db.Model):
         #results.pop('_sa_instance_state', None)
         exits = self.exits + self.linked_rooms
         results['exits'] = {exit.id:exit.name for exit in exits}
+        results['image'] = self.image
         return results
 
 inventory_table = db.Table('inventory_table', 

@@ -176,6 +176,13 @@ class Room(db.Model):
             )
     type = db.Column(db.String(32))
     room_type = db.Column(db.String(64))
+    
+    @property
+    def image(self):
+        if self.room_type == "bar":
+            return 'bar.jpg'
+        else:
+            return 'mars.jpg'
 
     def __init__(self, name='',description='',room_type='indoors',players=[],exits=[]):
         self.name = name
